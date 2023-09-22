@@ -36,8 +36,13 @@ namespace CareTakerCT.Controllers
         }
 
         // GET: Clinics/Create
+        // [Authorize(Roles ="admin")]
         public ActionResult Create()
         {
+            if (!User.IsInRole("admin"))
+            {
+                return HttpNotFound();
+            }
             return View();
         }
 
