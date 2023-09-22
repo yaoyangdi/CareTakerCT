@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -12,6 +13,13 @@ namespace CareTakerCT.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+
+        // New attribute added
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        [DisplayFormat(DataFormatString = "{yyyy/mm/dd}")]
+        public DateTime DateOfBirth { get; set; }
     }
 
     public class ManageLoginsViewModel

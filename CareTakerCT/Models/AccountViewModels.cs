@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CareTakerCT.Models
@@ -79,6 +80,18 @@ namespace CareTakerCT.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name="First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name="Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Date of Birth")]
+        public DateTime DateOfBirth { get; set; }
     }
 
     public class ResetPasswordViewModel
