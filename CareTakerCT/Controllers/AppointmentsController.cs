@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -23,13 +24,12 @@ namespace CareTakerCT.Controllers
             if (User.IsInRole("doctor"))
             {
                 result = db.Appointments.Where(a => a.DoctorId == UserId.ToString()).Include(a => a.Clinic).Include(a => a.Doctor).ToList();
-
             }
             else if (User.IsInRole("patient"))
             {
                 result = db.Appointments.Where(a => a.PatientId == UserId.ToString()).Include(a => a.Clinic).Include(a => a.Doctor).ToList();
             }
-            else
+            else if (User.IsInRole("admin"))
             {
                 result = db.Appointments.Include(a => a.Clinic).Include(a => a.Doctor).ToList();
             }
@@ -68,8 +68,18 @@ namespace CareTakerCT.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Create([Bind(Include = "Id,BookTime,Description,ClinicId,DoctorId")] Appointment appointment)
         {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(HttpUtility.HtmlEncode(appointment.Description));
+
+            appointment.Description = sb.ToString();
+
+            // Encode the HTML entities to ensure data is properly sanitized and protected against XSS attacks
+            string strDes = HttpUtility.HtmlEncode(appointment.Description);
+            appointment.Description = strDes;
+
             if (ModelState.IsValid)
             {
                 // Here we add patientId to build the relationship between Patient and Appointment(Restrict the appointment is made from paitient)
