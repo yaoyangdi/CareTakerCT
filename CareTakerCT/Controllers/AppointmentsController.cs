@@ -84,6 +84,11 @@ namespace CareTakerCT.Controllers
             {
                 return HttpNotFound();
             }
+            var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
+            var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
+
+            ViewBag.DoctorId = new SelectList(doctors, "Id", "FirstName");
+
             ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", appointment.ClinicId);
             return View(appointment);
         }
@@ -101,6 +106,11 @@ namespace CareTakerCT.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
+            var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
+
+            ViewBag.DoctorId = new SelectList(doctors, "Id", "FirstName");
+
             ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", appointment.ClinicId);
             return View(appointment);
         }
