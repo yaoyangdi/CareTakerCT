@@ -1,12 +1,11 @@
-﻿using System;
+﻿using CareTakerCT.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using CareTakerCT.Models;
 
 namespace CareTakerCT.Controllers
 {
@@ -17,7 +16,9 @@ namespace CareTakerCT.Controllers
         // GET: Appointments
         public ActionResult Index()
         {
-            return View(db.Appointments.ToList());
+
+            var result = db.Appointments.Include(a => a.Clinic).Include(a => a.Doctor).ToList();
+            return View(result);
         }
 
         // GET: Appointments/Details/5
@@ -27,7 +28,8 @@ namespace CareTakerCT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Appointment appointment = db.Appointments.Find(id);
+
+            var appointment = db.Appointments.Where(a=>a.Id ==id).Include(a => a.Doctor).Include(a => a.Clinic).FirstOrDefault();
             if (appointment == null)
             {
                 return HttpNotFound();
@@ -38,15 +40,19 @@ namespace CareTakerCT.Controllers
         // GET: Appointments/Create
         public ActionResult Create()
         {
+            var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
+            var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
+
+            ViewBag.DoctorId = new SelectList(doctors, "Id", "FirstName");
+            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name");
             return View();
         }
-
         // POST: Appointments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,BookTime,Description")] Appointment appointment)
+        public ActionResult Create([Bind(Include = "Id,BookTime,Description,ClinicId,DoctorId")] Appointment appointment)
         {
             if (ModelState.IsValid)
             {
@@ -54,6 +60,14 @@ namespace CareTakerCT.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
+            var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
+
+            ViewBag.DoctorId = new SelectList(doctors, "Id", "FirstName");
+            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", appointment.ClinicId);
+            var doctor = appointment.Doctor;
+            var bookTime = appointment.BookTime;
+
 
             return View(appointment);
         }
@@ -70,6 +84,7 @@ namespace CareTakerCT.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", appointment.ClinicId);
             return View(appointment);
         }
 
@@ -78,7 +93,7 @@ namespace CareTakerCT.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,BookTime,Description")] Appointment appointment)
+        public ActionResult Edit([Bind(Include = "Id,BookTime,Description,ClinicId,DoctorId")] Appointment appointment)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +101,7 @@ namespace CareTakerCT.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", appointment.ClinicId);
             return View(appointment);
         }
 

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace CareTakerCT.Models
 {
@@ -13,10 +10,19 @@ namespace CareTakerCT.Models
 
         [Required]
         [Display(Name = "Booking Time")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
         public DateTime BookTime { get; set; }
 
         [Required]
-        public string Description { get; set; }  
+        public string Description { get; set; }
+
+
+        [Required]
+        public int ClinicId { get; set; }
+        public Clinic Clinic { get; set; }
+
+        public string DoctorId { get; set; }
+        public virtual ApplicationUser Doctor { get; set; } 
+
+
     }
 }

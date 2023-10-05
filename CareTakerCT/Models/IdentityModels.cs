@@ -14,8 +14,15 @@ namespace CareTakerCT.Models
     public class ApplicationUser : IdentityUser
     {
         // New attribute added
+        [Required]
         public string FirstName { get; set; }
+        
+        [Required]
         public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Date of Birth")]
+        [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -41,6 +48,5 @@ namespace CareTakerCT.Models
 
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-
     }
 }

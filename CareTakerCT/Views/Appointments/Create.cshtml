@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Make an apppointment</h2>
 
 
 @using (Html.BeginForm())
@@ -13,24 +13,45 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Appointment</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.BookTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.BookTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.BookTime, new { htmlAttributes = new { title = "The appointment date and time you are available", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.BookTime, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { title = "Comments you would like to share with doctors", @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClinicId, "Clinic", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ClinicId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ClinicId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DoctorId, "Doctor", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DoctorId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DoctorId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -44,6 +65,7 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datetimepicker")
@@ -51,9 +73,15 @@
         $(function () {
             $('#BookTime').datetimepicker(
                 {
-                    format: "YYYY/MM/DD HH:mm",
-                    minDate: new Date()
+                    format: "MM/DD/YYYY hh:mm",
+                    minDate: new moment().add(1, "days")
+
+
+
                 });
         });
     </script>
+
+
 }
+<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />

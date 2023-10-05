@@ -60,20 +60,45 @@
     }
 </main>
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datetimepicker")
-
     <script type="text/javascript">
         $(function () {
             $('#DateOfBirth').datetimepicker(
                 {
                     format: "YYYY/MM/DD",
-                    maxDate: new Date(),
-                    minDate: new Date("1900/01/01")
+                    maxDate: new moment().subtract(1, 'days'),
+                    minDate: new Date("1950/01/01"),
+
+
 
                 });
         });
+
+        $.extend(true, $.fn.datetimepicker.defaults, {
+            icons: {
+                time: 'far fa-clock',
+                date: 'far fa-calendar',
+                up: 'fas fa-arrow-up',
+                down: 'fas fa-arrow-down',
+                previous: 'fas fa-chevron-left',
+                next: 'fas fa-chevron-right',
+                today: 'fas fa-calendar-check',
+                clear: 'far fa-trash-alt',
+                close: 'far fa-times-circle'
+            }
+        });
+
+
+
     </script>
 
+
 }
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+

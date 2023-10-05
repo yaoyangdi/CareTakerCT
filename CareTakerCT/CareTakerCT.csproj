@@ -200,6 +200,70 @@
     <Compile Include="Migrations\202309220512015_AppointmentModel.designer.cs">
       <DependentUpon>202309220512015_AppointmentModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310050458318_littleChangesOnIndentity.cs" />
+    <Compile Include="Migrations\202310050458318_littleChangesOnIndentity.designer.cs">
+      <DependentUpon>202310050458318_littleChangesOnIndentity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310050607586_AppointmentModelUpdated.cs" />
+    <Compile Include="Migrations\202310050607586_AppointmentModelUpdated.designer.cs">
+      <DependentUpon>202310050607586_AppointmentModelUpdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310050714198_appointmentmodelChanges.cs" />
+    <Compile Include="Migrations\202310050714198_appointmentmodelChanges.designer.cs">
+      <DependentUpon>202310050714198_appointmentmodelChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310050721226_appointmentmodelChanges1.cs" />
+    <Compile Include="Migrations\202310050721226_appointmentmodelChanges1.designer.cs">
+      <DependentUpon>202310050721226_appointmentmodelChanges1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310050917511_appointmentDoctorIdType.cs" />
+    <Compile Include="Migrations\202310050917511_appointmentDoctorIdType.designer.cs">
+      <DependentUpon>202310050917511_appointmentDoctorIdType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310050951122_appointmentBooktimeType.cs" />
+    <Compile Include="Migrations\202310050951122_appointmentBooktimeType.designer.cs">
+      <DependentUpon>202310050951122_appointmentBooktimeType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310050958082_appointmentBooktimeType2.cs" />
+    <Compile Include="Migrations\202310050958082_appointmentBooktimeType2.designer.cs">
+      <DependentUpon>202310050958082_appointmentBooktimeType2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051011303_appointmentBooktimeType3.cs" />
+    <Compile Include="Migrations\202310051011303_appointmentBooktimeType3.designer.cs">
+      <DependentUpon>202310051011303_appointmentBooktimeType3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051016314_appointmentBooktimeType4.cs" />
+    <Compile Include="Migrations\202310051016314_appointmentBooktimeType4.designer.cs">
+      <DependentUpon>202310051016314_appointmentBooktimeType4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051020258_appointmentBooktimeType5.cs" />
+    <Compile Include="Migrations\202310051020258_appointmentBooktimeType5.designer.cs">
+      <DependentUpon>202310051020258_appointmentBooktimeType5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051032153_a11.cs" />
+    <Compile Include="Migrations\202310051032153_a11.designer.cs">
+      <DependentUpon>202310051032153_a11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051033364_a111.cs" />
+    <Compile Include="Migrations\202310051033364_a111.designer.cs">
+      <DependentUpon>202310051033364_a111.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051221278_a1111.cs" />
+    <Compile Include="Migrations\202310051221278_a1111.designer.cs">
+      <DependentUpon>202310051221278_a1111.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051224566_a11111.cs" />
+    <Compile Include="Migrations\202310051224566_a11111.designer.cs">
+      <DependentUpon>202310051224566_a11111.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051225356_a2.cs" />
+    <Compile Include="Migrations\202310051225356_a2.designer.cs">
+      <DependentUpon>202310051225356_a2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051233029_a3.cs" />
+    <Compile Include="Migrations\202310051233029_a3.designer.cs">
+      <DependentUpon>202310051233029_a3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
@@ -228,6 +292,47 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap4.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap5.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap5.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.bulma.css" />
+    <Content Include="Content\DataTables\css\dataTables.bulma.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.dataTables.css" />
+    <Content Include="Content\DataTables\css\dataTables.dataTables.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.foundation.css" />
+    <Content Include="Content\DataTables\css\dataTables.foundation.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.jqueryui.css" />
+    <Content Include="Content\DataTables\css\dataTables.jqueryui.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.semanticui.css" />
+    <Content Include="Content\DataTables\css\dataTables.semanticui.min.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTables\images\sort_asc.png" />
+    <Content Include="Content\DataTables\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables\images\sort_both.png" />
+    <Content Include="Content\DataTables\images\sort_desc.png" />
+    <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap4.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap5.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap5.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.bulma.js" />
+    <Content Include="Content\DataTables\js\dataTables.bulma.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.dataTables.js" />
+    <Content Include="Content\DataTables\js\dataTables.dataTables.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.foundation.js" />
+    <Content Include="Content\DataTables\js\dataTables.foundation.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.jqueryui.js" />
+    <Content Include="Content\DataTables\js\dataTables.jqueryui.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.semanticui.js" />
+    <Content Include="Content\DataTables\js\dataTables.semanticui.min.js" />
+    <Content Include="Content\DataTables\js\jquery.dataTables.js" />
+    <Content Include="Content\DataTables\js\jquery.dataTables.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -240,6 +345,82 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
+    <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\autoFill.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\autoFill.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\autoFill.foundation.js" />
+    <Content Include="Scripts\DataTables\autoFill.foundation.min.js" />
+    <Content Include="Scripts\DataTables\autoFill.jqueryui.js" />
+    <Content Include="Scripts\DataTables\autoFill.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\autoFill.semanticui.js" />
+    <Content Include="Scripts\DataTables\autoFill.semanticui.min.js" />
+    <Content Include="Scripts\DataTables\buttons.bootstrap.js" />
+    <Content Include="Scripts\DataTables\buttons.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\buttons.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\buttons.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\buttons.colVis.js" />
+    <Content Include="Scripts\DataTables\buttons.colVis.min.js" />
+    <Content Include="Scripts\DataTables\buttons.flash.js" />
+    <Content Include="Scripts\DataTables\buttons.flash.min.js" />
+    <Content Include="Scripts\DataTables\buttons.foundation.js" />
+    <Content Include="Scripts\DataTables\buttons.foundation.min.js" />
+    <Content Include="Scripts\DataTables\buttons.html5.js" />
+    <Content Include="Scripts\DataTables\buttons.html5.min.js" />
+    <Content Include="Scripts\DataTables\buttons.jqueryui.js" />
+    <Content Include="Scripts\DataTables\buttons.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\buttons.print.js" />
+    <Content Include="Scripts\DataTables\buttons.print.min.js" />
+    <Content Include="Scripts\DataTables\buttons.semanticui.js" />
+    <Content Include="Scripts\DataTables\buttons.semanticui.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.autoFill.js" />
+    <Content Include="Scripts\DataTables\dataTables.autoFill.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.bootstrap.js" />
+    <Content Include="Scripts\DataTables\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.buttons.js" />
+    <Content Include="Scripts\DataTables\dataTables.buttons.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.colReorder.js" />
+    <Content Include="Scripts\DataTables\dataTables.colReorder.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.fixedColumns.js" />
+    <Content Include="Scripts\DataTables\dataTables.fixedColumns.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.fixedHeader.js" />
+    <Content Include="Scripts\DataTables\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.foundation.js" />
+    <Content Include="Scripts\DataTables\dataTables.foundation.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.jqueryui.js" />
+    <Content Include="Scripts\DataTables\dataTables.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.keyTable.js" />
+    <Content Include="Scripts\DataTables\dataTables.keyTable.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.material.js" />
+    <Content Include="Scripts\DataTables\dataTables.material.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.responsive.js" />
+    <Content Include="Scripts\DataTables\dataTables.responsive.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.rowGroup.js" />
+    <Content Include="Scripts\DataTables\dataTables.rowGroup.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.rowReorder.js" />
+    <Content Include="Scripts\DataTables\dataTables.rowReorder.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.scroller.js" />
+    <Content Include="Scripts\DataTables\dataTables.scroller.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.select.js" />
+    <Content Include="Scripts\DataTables\dataTables.select.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.semanticui.js" />
+    <Content Include="Scripts\DataTables\dataTables.semanticui.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.uikit.js" />
+    <Content Include="Scripts\DataTables\dataTables.uikit.min.js" />
+    <Content Include="Scripts\DataTables\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\DataTables\responsive.bootstrap.js" />
+    <Content Include="Scripts\DataTables\responsive.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\responsive.bootstrap4.js" />
+    <Content Include="Scripts\DataTables\responsive.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables\responsive.foundation.js" />
+    <Content Include="Scripts\DataTables\responsive.foundation.min.js" />
+    <Content Include="Scripts\DataTables\responsive.jqueryui.js" />
+    <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables\responsive.semanticui.js" />
+    <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -298,6 +479,7 @@
     <Content Include="Views\Appointments\Details.cshtml" />
     <Content Include="Views\Appointments\Edit.cshtml" />
     <Content Include="Views\Appointments\Index.cshtml" />
+    <Content Include="Views\Appointments\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -347,6 +529,54 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309220512015_AppointmentModel.resx">
       <DependentUpon>202309220512015_AppointmentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310050458318_littleChangesOnIndentity.resx">
+      <DependentUpon>202310050458318_littleChangesOnIndentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310050607586_AppointmentModelUpdated.resx">
+      <DependentUpon>202310050607586_AppointmentModelUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310050714198_appointmentmodelChanges.resx">
+      <DependentUpon>202310050714198_appointmentmodelChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310050721226_appointmentmodelChanges1.resx">
+      <DependentUpon>202310050721226_appointmentmodelChanges1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310050917511_appointmentDoctorIdType.resx">
+      <DependentUpon>202310050917511_appointmentDoctorIdType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310050951122_appointmentBooktimeType.resx">
+      <DependentUpon>202310050951122_appointmentBooktimeType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310050958082_appointmentBooktimeType2.resx">
+      <DependentUpon>202310050958082_appointmentBooktimeType2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051011303_appointmentBooktimeType3.resx">
+      <DependentUpon>202310051011303_appointmentBooktimeType3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051016314_appointmentBooktimeType4.resx">
+      <DependentUpon>202310051016314_appointmentBooktimeType4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051020258_appointmentBooktimeType5.resx">
+      <DependentUpon>202310051020258_appointmentBooktimeType5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051032153_a11.resx">
+      <DependentUpon>202310051032153_a11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051033364_a111.resx">
+      <DependentUpon>202310051033364_a111.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051221278_a1111.resx">
+      <DependentUpon>202310051221278_a1111.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051224566_a11111.resx">
+      <DependentUpon>202310051224566_a11111.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051225356_a2.resx">
+      <DependentUpon>202310051225356_a2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051233029_a3.resx">
+      <DependentUpon>202310051233029_a3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
