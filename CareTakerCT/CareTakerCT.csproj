@@ -264,6 +264,10 @@
     <Compile Include="Migrations\202310051233029_a3.designer.cs">
       <DependentUpon>202310051233029_a3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310051427056_PatientInAppointment.cs" />
+    <Compile Include="Migrations\202310051427056_PatientInAppointment.designer.cs">
+      <DependentUpon>202310051427056_PatientInAppointment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
@@ -577,6 +581,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310051233029_a3.resx">
       <DependentUpon>202310051233029_a3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051427056_PatientInAppointment.resx">
+      <DependentUpon>202310051427056_PatientInAppointment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

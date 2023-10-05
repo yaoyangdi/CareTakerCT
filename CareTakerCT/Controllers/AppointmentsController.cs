@@ -1,4 +1,5 @@
 ﻿using CareTakerCT.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,8 +17,23 @@ namespace CareTakerCT.Controllers
         // GET: Appointments
         public ActionResult Index()
         {
+            var result = new List<Appointment>();
+            var UserId = User.Identity.GetUserId();
 
-            var result = db.Appointments.Include(a => a.Clinic).Include(a => a.Doctor).ToList();
+            if (User.IsInRole("doctor"))
+            {
+                result = db.Appointments.Where(a => a.DoctorId == UserId.ToString()).Include(a => a.Clinic).Include(a => a.Doctor).ToList();
+
+            }
+            else if (User.IsInRole("patient"))
+            {
+                result = db.Appointments.Where(a => a.PatientId == UserId.ToString()).Include(a => a.Clinic).Include(a => a.Doctor).ToList();
+            }
+            else
+            {
+                result = db.Appointments.Include(a => a.Clinic).Include(a => a.Doctor).ToList();
+            }
+
             return View(result);
         }
 
@@ -56,6 +72,9 @@ namespace CareTakerCT.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Here we add patientId to build the relationship between Patient and Appointment(Restrict the appointment is made from paitient)
+                appointment.PatientId = User.Identity.GetUserId();
+
                 db.Appointments.Add(appointment);
                 db.SaveChanges();
                 return RedirectToAction("Index");

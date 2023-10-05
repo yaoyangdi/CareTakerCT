@@ -14,7 +14,8 @@ namespace CareTakerCT.Models
 
         [Required]
         public string Description { get; set; }
-
+        public string PatientId { get; set; }
+        public virtual ApplicationUser Patient { get; set; }
 
         [Required]
         public int ClinicId { get; set; }
