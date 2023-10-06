@@ -15,6 +15,7 @@ namespace CareTakerCT.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [Authorize]
         // GET: Appointments
         public ActionResult Index()
         {
@@ -37,6 +38,7 @@ namespace CareTakerCT.Controllers
             return View(result);
         }
 
+        [Authorize]
         // GET: Appointments/Details/5
         public ActionResult Details(int? id)
         {
@@ -52,7 +54,7 @@ namespace CareTakerCT.Controllers
             }
             return View(appointment);
         }
-
+        [Authorize]
         // GET: Appointments/Create
         public ActionResult Create()
         {
@@ -66,6 +68,8 @@ namespace CareTakerCT.Controllers
         // POST: Appointments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -101,6 +105,7 @@ namespace CareTakerCT.Controllers
             return View(appointment);
         }
 
+        [Authorize(Roles = "admin,doctor")]
         // GET: Appointments/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -125,6 +130,7 @@ namespace CareTakerCT.Controllers
         // POST: Appointments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin,doctor")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,BookTime,Description,ClinicId,DoctorId")] Appointment appointment)
@@ -144,6 +150,7 @@ namespace CareTakerCT.Controllers
             return View(appointment);
         }
 
+        [Authorize(Roles = "admin,doctor")]
         // GET: Appointments/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -159,6 +166,7 @@ namespace CareTakerCT.Controllers
             return View(appointment);
         }
 
+        [Authorize(Roles = "admin,doctor")]
         // POST: Appointments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -169,7 +177,7 @@ namespace CareTakerCT.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -29,9 +29,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Doctor)
             </th>
+
             @if (User.IsInRole("admin") || User.IsInRole("doctor"))
             {
-
+                <th>
+                    @Html.DisplayNameFor(model => model.Patient)
+                </th>
                 <th>Options</th>
             }
         </tr>
@@ -56,6 +59,10 @@
 
                 @if (User.IsInRole("admin") || User.IsInRole("doctor"))
                 {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patient.FirstName)
+                    </td>
+
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                         <span> | </span>

@@ -35,6 +35,7 @@ namespace CareTakerCT.Controllers
             return View(clinic);
         }
 
+        [Authorize(Roles = "admin")]
         // GET: Clinics/Create
         // [Authorize(Roles ="admin")]
         public ActionResult Create()
@@ -49,6 +50,7 @@ namespace CareTakerCT.Controllers
         // POST: Clinics/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Address")] Clinic clinic)
@@ -64,6 +66,7 @@ namespace CareTakerCT.Controllers
         }
 
         // GET: Clinics/Edit/5
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -83,6 +86,7 @@ namespace CareTakerCT.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult Edit([Bind(Include = "Id,Name,Address")] Clinic clinic)
         {
             if (ModelState.IsValid)
@@ -95,6 +99,7 @@ namespace CareTakerCT.Controllers
         }
 
         // GET: Clinics/Delete/5
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -112,6 +117,7 @@ namespace CareTakerCT.Controllers
         // POST: Clinics/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Clinic clinic = db.Clinics.Find(id);
@@ -119,7 +125,7 @@ namespace CareTakerCT.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "admin")]
         protected override void Dispose(bool disposing)
         {
             if (disposing)
