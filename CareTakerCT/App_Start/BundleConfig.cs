@@ -32,6 +32,9 @@ namespace CareTakerCT
                       "~/Content/site.css",
                       "~/Content/jquery.dataTables.min.css",
                       "~/Content/bootstrap-datetimepicker.css"));
+
+            bundles.Add(new Bundle("~/bundles/map").Include(
+                      "~/Scripts/map.js"));
         }
     }
 }

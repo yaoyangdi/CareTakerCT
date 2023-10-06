@@ -14,6 +14,13 @@ namespace CareTakerCT.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public JsonResult GetClinics()
+        {
+            var clinics = db.Clinics.ToList();
+            return new JsonResult { Data = clinics, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+        }
+
         // GET: Clinics
         public ActionResult Index()
         {
