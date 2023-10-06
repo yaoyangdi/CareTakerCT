@@ -19,14 +19,9 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    @if (User.IsInRole("admin") || User.IsInRole("doctor"))
-                    {
-                        <li>@Html.ActionLink("Appointments", "Index", "Appointments", new { area = "" }, new { @class = "nav-link" })</li>
-                    }
-                    @if (User.IsInRole("patient"))
-                    {
-                        <li>@Html.ActionLink("Appointments", "Create", "Appointments", new { area = "" }, new { @class = "nav-link" })</li>
-                    }
+                    
+                    <li>@Html.ActionLink("Appointments", "Index", "Appointments", new { area = "" }, new { @class = "nav-link" })</li>
+
                     <li>@Html.ActionLink("Clinics", "Index", "Clinics", new { area = "" }, new { @class = "nav-link" })</li>
 
                 </ul>

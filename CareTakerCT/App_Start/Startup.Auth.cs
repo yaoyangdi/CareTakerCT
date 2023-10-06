@@ -54,15 +54,15 @@ namespace CareTakerCT
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "334042379153712",
+               appSecret: "2542d1773022c911e5d484a74c4bb560");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "762127969132-ihpjooaeqsj1pqajvugod1a427mgplvq.apps.googleusercontent.com",
+                ClientSecret = "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"
+            });
         }
     }
 }

@@ -19,8 +19,11 @@ namespace CareTakerCT.Controllers
         // GET: Appointments
         public ActionResult Index()
         {
-            var result = new List<Appointment>();
+            // User Id
             var UserId = User.Identity.GetUserId();
+
+            // Initialization and also avoid unauthorized access
+            var result = new List<Appointment>(); 
 
             if (User.IsInRole("doctor"))
             {
@@ -35,6 +38,7 @@ namespace CareTakerCT.Controllers
                 result = db.Appointments.Include(a => a.Clinic).Include(a => a.Doctor).ToList();
             }
 
+            ViewBag.Appointment = result;
             return View(result);
         }
 
