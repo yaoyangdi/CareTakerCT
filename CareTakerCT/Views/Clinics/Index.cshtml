@@ -17,27 +17,35 @@
 
 <div id="dirctions">
     <h4>Get your way</h4>
-    <div class="row col-md-4 ">
-        <label for="start" class="col-md-2 control-label">Start</label>
-        <input type="text" id="start" class="col-md-4 form-control" style="margin-left:10px"/>
+    <div class="row col-md-6 col-sm-12">
+        <div class="row" style="display:flex; margin-bottom: 0.5rem">
+            <div style="flex:1">
+                <label for="start" class="col-md-2 control-label">Start</label>
+                <input type="text" id="start" class="col-md-6 form-control"/>
 
-        <label for="destination" class="col-md-2 control-label">End</label>
-        <select id="destination" class="col-md-4 form-control" style="margin-left:10px">
-            @foreach (var clinic in Model)
-            {
-                <option value="@clinic.Address">@clinic.Name</option>
-            }
-        </select>
-        <div class="row">
+            </div>
+
+            <div style="flex:1">
+                <label for="destination" class="col-md-2 control-label">End</label>
+                <select id="destination" class="col-md-6 form-control" >
+                    @foreach (var clinic in Model)
+                    {
+                        <option value="@clinic.Address">@clinic.Name</option>
+                    }
+                </select>
+            </div>
+
+        </div>
+        <div class="row col-md-4">
             <label for="transportation" class="col-md-2 control-label">Transportation</label>
-            <select id="mode" class="col-md-4 form-control" style="margin-left:10px">
+            <select id="mode" class="col-md-3 form-control" style="margin-left:10px">
                     <option value="DRIVING">Driving</option>
                     <option value="WALKING">Walking</option>
                     <option value="BICYLING">Bicycling</option>
                     <option value="TRANSIT">Transit</option>
 
             </select>
-            <input type="submit" value="Go" class="btn btn-default col-md-5" id="route_btn" style="margin-top:10px; margin-left: 10px; border-color:black; "/>
+            <input type="submit" value="Go &raquo;" class="btn btn-outline-dark col-md-5" id="route_btn" style="margin-top:10px; margin-left: 10px; border-color:black; "/>
 
         </div>
     </div>

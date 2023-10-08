@@ -75,7 +75,7 @@ namespace CareTakerCT.Controllers
 
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]  // We also use this annotation to prevent malicious script
         [ValidateInput(false)]
         public ActionResult Create([Bind(Include = "Id,BookTime,Description,ClinicId,DoctorId")] Appointment appointment)
         {
@@ -109,6 +109,8 @@ namespace CareTakerCT.Controllers
             return View(appointment);
         }
 
+
+        [ValidateAntiForgeryToken]  // We also use this annotation to prevent malicious script
         [Authorize(Roles = "admin,doctor")]
         // GET: Appointments/Edit/5
         public ActionResult Edit(int? id)

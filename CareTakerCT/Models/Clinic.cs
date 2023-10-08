@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -17,5 +18,6 @@ namespace CareTakerCT.Models
         [Required]
         [Display(Name= "Clinic Address")]
         public string Address{ get; set; }
+
     }
 }

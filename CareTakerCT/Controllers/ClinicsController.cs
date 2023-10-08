@@ -59,7 +59,7 @@ namespace CareTakerCT.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "admin")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]  // We also use this annotation to prevent malicious script
         public ActionResult Create([Bind(Include = "Id,Name,Address")] Clinic clinic)
         {
             if (ModelState.IsValid)
