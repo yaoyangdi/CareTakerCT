@@ -3,12 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - CareTakerCT</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
+    <style>
+        ul.navbar-nav.flex-grow-1 li:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    </style>
+
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
             @Html.ActionLink("CareTakerCT", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -19,13 +25,15 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    
+
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
                     <li>@Html.ActionLink("Appointments", "Index", "Appointments", new { area = "" }, new { @class = "nav-link" })</li>
 
                     <li>@Html.ActionLink("Clinics", "Index", "Clinics", new { area = "" }, new { @class = "nav-link" })</li>
 
                 </ul>
-                 @Html.Partial("_LoginPartial")
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </nav>

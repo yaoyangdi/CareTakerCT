@@ -18,6 +18,5 @@ namespace CareTakerCT.Models
         [Required]
         [Display(Name= "Clinic Address")]
         public string Address{ get; set; }
-
     }
 }
