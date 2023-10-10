@@ -1,4 +1,6 @@
-﻿@model CareTakerCT.Models.SendEmail
+﻿
+@model CareTakerCT.Models.SendEmail
+
 @{
     ViewBag.Title = "Contact Our Doctors";
 }
@@ -8,10 +10,11 @@
 
 
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Contact", "Home", FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
-        
+
 
         if (@ViewBag.Result != null)
         {
@@ -46,6 +49,13 @@
             </div>
 
             <div class="form-group">
+                <label class="control-label col-md-2" for="postedFile">Upload attachment</label>
+                <div class="col-md-10" style="margin-left:-0.7rem">
+                    <input type="file" id="postedFile" class="btn btn-default" accept="application/pdf, image/png, image/gif, image/jpeg" />
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Send" class="btn btn-default" />
                 </div>
@@ -58,6 +68,12 @@
     </div>
 
 </main>
+
+<style>
+    .form-group {
+        margin-bottom: 0.5rem;
+    }
+</style>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

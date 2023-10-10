@@ -60,6 +60,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -178,6 +179,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppointmentsController.cs" />
     <Compile Include="Controllers\ClinicsController.cs" />
+    <Compile Include="Controllers\DoctorRatingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -287,11 +289,69 @@
     <Compile Include="Migrations\202310090211489_sendEmailModel1.designer.cs">
       <DependentUpon>202310090211489_sendEmailModel1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310091126391_imagesModel.cs" />
+    <Compile Include="Migrations\202310091126391_imagesModel.designer.cs">
+      <DependentUpon>202310091126391_imagesModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310091159116_Initial.cs" />
+    <Compile Include="Migrations\202310091159116_Initial.designer.cs">
+      <DependentUpon>202310091159116_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310091211147_resume.cs" />
+    <Compile Include="Migrations\202310091211147_resume.designer.cs">
+      <DependentUpon>202310091211147_resume.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310091239035_emailUpdate.cs" />
+    <Compile Include="Migrations\202310091239035_emailUpdate.designer.cs">
+      <DependentUpon>202310091239035_emailUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310091304511_imagesToFiles.cs" />
+    <Compile Include="Migrations\202310091304511_imagesToFiles.designer.cs">
+      <DependentUpon>202310091304511_imagesToFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310100219279_ratingModel.cs" />
+    <Compile Include="Migrations\202310100219279_ratingModel.designer.cs">
+      <DependentUpon>202310100219279_ratingModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310100305023_aaaa.cs" />
+    <Compile Include="Migrations\202310100305023_aaaa.designer.cs">
+      <DependentUpon>202310100305023_aaaa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310100310038_aaaaa.cs" />
+    <Compile Include="Migrations\202310100310038_aaaaa.designer.cs">
+      <DependentUpon>202310100310038_aaaaa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310100316130_aaaaaa.cs" />
+    <Compile Include="Migrations\202310100316130_aaaaaa.designer.cs">
+      <DependentUpon>202310100316130_aaaaaa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310100327335_1.cs" />
+    <Compile Include="Migrations\202310100327335_1.designer.cs">
+      <DependentUpon>202310100327335_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310100430078_ratingsChanges.cs" />
+    <Compile Include="Migrations\202310100430078_ratingsChanges.designer.cs">
+      <DependentUpon>202310100430078_ratingsChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310100439240_ratingsChangess.cs" />
+    <Compile Include="Migrations\202310100439240_ratingsChangess.designer.cs">
+      <DependentUpon>202310100439240_ratingsChangess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310100447101_doctorRating.cs" />
+    <Compile Include="Migrations\202310100447101_doctorRating.designer.cs">
+      <DependentUpon>202310100447101_doctorRating.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310100821099_clinics.cs" />
+    <Compile Include="Migrations\202310100821099_clinics.designer.cs">
+      <DependentUpon>202310100821099_clinics.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Clinic.cs" />
+    <Compile Include="Models\DoctorRatings.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\FIles.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SendEmail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -304,6 +364,10 @@
     <Compile Include="Utils\EmailSender.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Database1.mdf" />
+    <Content Include="App_Data\Database1_log.ldf">
+      <DependentUpon>Database1.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -518,9 +582,14 @@
     <Content Include="Views\Appointments\Edit.cshtml" />
     <Content Include="Views\Appointments\Index.cshtml" />
     <Content Include="Views\Appointments\View.cshtml" />
+    <Content Include="Views\DoctorRatings\Create.cshtml" />
+    <Content Include="Views\DoctorRatings\Delete.cshtml" />
+    <Content Include="Views\DoctorRatings\Details.cshtml" />
+    <Content Include="Views\DoctorRatings\Edit.cshtml" />
+    <Content Include="Views\DoctorRatings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -627,6 +696,48 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310090211489_sendEmailModel1.resx">
       <DependentUpon>202310090211489_sendEmailModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310091126391_imagesModel.resx">
+      <DependentUpon>202310091126391_imagesModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310091159116_Initial.resx">
+      <DependentUpon>202310091159116_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310091211147_resume.resx">
+      <DependentUpon>202310091211147_resume.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310091239035_emailUpdate.resx">
+      <DependentUpon>202310091239035_emailUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310091304511_imagesToFiles.resx">
+      <DependentUpon>202310091304511_imagesToFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310100219279_ratingModel.resx">
+      <DependentUpon>202310100219279_ratingModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310100305023_aaaa.resx">
+      <DependentUpon>202310100305023_aaaa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310100310038_aaaaa.resx">
+      <DependentUpon>202310100310038_aaaaa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310100316130_aaaaaa.resx">
+      <DependentUpon>202310100316130_aaaaaa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310100327335_1.resx">
+      <DependentUpon>202310100327335_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310100430078_ratingsChanges.resx">
+      <DependentUpon>202310100430078_ratingsChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310100439240_ratingsChangess.resx">
+      <DependentUpon>202310100439240_ratingsChangess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310100447101_doctorRating.resx">
+      <DependentUpon>202310100447101_doctorRating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310100821099_clinics.resx">
+      <DependentUpon>202310100821099_clinics.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

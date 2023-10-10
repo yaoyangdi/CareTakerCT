@@ -18,5 +18,8 @@ namespace CareTakerCT.Models
         [Required]
         [Display(Name= "Clinic Address")]
         public string Address{ get; set; }
+
+        public string DoctorId { get; set; }
+        public virtual DbSet<ApplicationUser> Doctors { get; set; }
     }
 }

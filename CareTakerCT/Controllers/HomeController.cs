@@ -3,6 +3,7 @@ using CareTakerCT.Utils;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
@@ -35,15 +36,32 @@ namespace CareTakerCT.Controllers
         }
 
         [HttpPost]
-        public ActionResult Contact(SendEmail model)
+        public ActionResult Contact(SendEmail model, HttpPostedFileBase postedFile)
         {
+            ModelState.Clear();
             if (ModelState.IsValid)
             {
                 try
                 {
+
+                    //var myUniqueFileName = string.Format(@"{0}", Guid.NewGuid());
+                    //model.file.Path = myUniqueFileName;
+
+                    //string serverPath = Server.MapPath("~/Uploads/");
+                    //string fileExtension = Path.GetExtension(postedFile.FileName);
+                    //string filePath = model.file.Path + fileExtension;
+                    //model.file.Path = filePath;
+                    //postedFile.SaveAs(serverPath + model.file.Path);
+                    //// db.Images.Add(model.file);
+                    //db.SaveChanges();
+
+
                     String toEmail = model.ToEmail;
                     String subject = model.Subject;
                     String contents = model.Contents;
+
+                    db.SendEmails.Add(model);
+                    db.SaveChanges();
 
                     // Retrieve user email based on userId and define as fromEmail
                     var userId = User.Identity.GetUserId();

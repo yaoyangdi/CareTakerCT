@@ -38,6 +38,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: - 37.84, lng: 145.08 },
         zoom: 10,
+        zoomControl: true
     });
 
     // Get current location
@@ -49,14 +50,15 @@ function initMap() {
                     lng: position.coords.longitude
                 };
                 map.setCenter(pos);
+                map.setZoom(100);
             },
             
             () => {
-                handleLocationError(false, infoWidnow, map.getCenter())
+                handleLocationError(false, infoWindnow, map.getCenter())
             }
         );
     } else {
-        handleLocationError(false, infoWidnow, map.getCenter())
+        handleLocationError(false, infoWindnow, map.getCenter())
     }
 
     // Mark clinics on Google map

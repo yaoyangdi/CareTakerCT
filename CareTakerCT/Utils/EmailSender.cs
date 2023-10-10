@@ -12,7 +12,7 @@ namespace CareTakerCT.Utils
     public class EmailSender
     {
         // Please use your API KEY here.
-        private const String API_KEY = "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";
+        private const String API_KEY = "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";
 
         public void Send(String fromEmail, String toEmail, String subject, String contents)
         {

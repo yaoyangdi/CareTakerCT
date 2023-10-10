@@ -48,5 +48,11 @@ namespace CareTakerCT.Models
 
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+
+        public DbSet<SendEmail> SendEmails { get; set; }
+
+        public DbSet<Files> Files { get; set; }
+
+        public DbSet<DoctorRatings> DoctorRatings { get; set; }
     }
 }
