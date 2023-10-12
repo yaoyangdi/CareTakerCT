@@ -8,14 +8,13 @@ namespace CareTakerCT.Models
 
     public partial class Files
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
         public string Path { get; set; }
 
         [Required]
-        [StringLength(50)]
         public string Name { get; set; }
 
     }

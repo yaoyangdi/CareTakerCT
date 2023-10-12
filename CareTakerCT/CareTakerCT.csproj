@@ -345,13 +345,50 @@
     <Compile Include="Migrations\202310100821099_clinics.designer.cs">
       <DependentUpon>202310100821099_clinics.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310110403062_ClinicDoctorEmailViewModels.cs" />
+    <Compile Include="Migrations\202310110403062_ClinicDoctorEmailViewModels.designer.cs">
+      <DependentUpon>202310110403062_ClinicDoctorEmailViewModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310110405517_ClinicDoctorEmailViewModelsRemove.cs" />
+    <Compile Include="Migrations\202310110405517_ClinicDoctorEmailViewModelsRemove.designer.cs">
+      <DependentUpon>202310110405517_ClinicDoctorEmailViewModelsRemove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310110752112_DoctorModel.cs" />
+    <Compile Include="Migrations\202310110752112_DoctorModel.designer.cs">
+      <DependentUpon>202310110752112_DoctorModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310110829290_DoctorRatingValue.cs" />
+    <Compile Include="Migrations\202310110829290_DoctorRatingValue.designer.cs">
+      <DependentUpon>202310110829290_DoctorRatingValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310110838307_DoctorRatingDoctorID.cs" />
+    <Compile Include="Migrations\202310110838307_DoctorRatingDoctorID.designer.cs">
+      <DependentUpon>202310110838307_DoctorRatingDoctorID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310110902476_Doctors.cs" />
+    <Compile Include="Migrations\202310110902476_Doctors.designer.cs">
+      <DependentUpon>202310110902476_Doctors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310111223134_files.cs" />
+    <Compile Include="Migrations\202310111223134_files.designer.cs">
+      <DependentUpon>202310111223134_files.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310120501187_filesLength.cs" />
+    <Compile Include="Migrations\202310120501187_filesLength.designer.cs">
+      <DependentUpon>202310120501187_filesLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310120700105_doctorRatings.cs" />
+    <Compile Include="Migrations\202310120700105_doctorRatings.designer.cs">
+      <DependentUpon>202310120700105_doctorRatings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Clinic.cs" />
+    <Compile Include="Models\ClinicDoctorEmailViewModels.cs" />
     <Compile Include="Models\DoctorRatings.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\FIles.cs" />
+    <Compile Include="Models\Files.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SendEmail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -738,6 +775,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310100821099_clinics.resx">
       <DependentUpon>202310100821099_clinics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310110403062_ClinicDoctorEmailViewModels.resx">
+      <DependentUpon>202310110403062_ClinicDoctorEmailViewModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310110405517_ClinicDoctorEmailViewModelsRemove.resx">
+      <DependentUpon>202310110405517_ClinicDoctorEmailViewModelsRemove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310110752112_DoctorModel.resx">
+      <DependentUpon>202310110752112_DoctorModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310110829290_DoctorRatingValue.resx">
+      <DependentUpon>202310110829290_DoctorRatingValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310110838307_DoctorRatingDoctorID.resx">
+      <DependentUpon>202310110838307_DoctorRatingDoctorID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310110902476_Doctors.resx">
+      <DependentUpon>202310110902476_Doctors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310111223134_files.resx">
+      <DependentUpon>202310111223134_files.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310120501187_filesLength.resx">
+      <DependentUpon>202310120501187_filesLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310120700105_doctorRatings.resx">
+      <DependentUpon>202310120700105_doctorRatings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

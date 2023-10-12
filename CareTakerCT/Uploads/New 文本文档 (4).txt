@@ -1,0 +1,53 @@
+Yonghui 等会会发给我most popular app list 大概1万5000多条
+
+1. 我需要把里面的每个app的相关推荐/类似app 给跑2分钟
+2. 每个app的developer的所有相关app都记录进去
+
+
+把自己是如何写代码的 系统的/完整的写出来 因为以后要用在论文里面
+
+暂时不需要exclude game app ， 以后可以根据size 进行筛选
+
+python那个项目暂时不要管
+
+
+
+reading a CSV file "PopularAPK" that contains a list of URLs to Google Play Store app pages
+https://play.google.com/store/apps/details?id=ru.kupibilet
+
+
+{'docid': 'org.mozilla.focus', 'backendDocid': 'org.mozilla.focus', 'docType': 1, 'backendId': 3, 'title': 'Firefox Focus: il browser', 'creator': 'Mozilla', 'descriptionHtml': 'Naviga come senessuno ti stesse guardando. Il nuovo Firefox Focus blocca automaticamente gli elementi traccianti più diffusi durante la navigazione, dall’istante in cui lo apri a quando lo chiudi. Cancella con facilità cronologia, passwo
+rd e cookie, liberandoti finalmente da elementi traccianti noiosi come gli annunci pubblicitari indesiderati.<br><br>La cosiddetta “navigazione anonima” dei comuni browser è incompleta e difficile da utilizza
+re. Focus porta la privacy a un nuovo livello: gratuito, sempre attivo e sempre dalla tua parte, perché è sviluppato da Mozilla, l&#39;organizzazione senza fini di lucro che salvaguarda i diritti degli utenti
+ sul Web.<br><br>PRIVACY IN AUTOMATICO<br>• Blocca gli elementi traccianti più diffusi sul Web senza bisogno di impostare alcun parametro<br>• Elimina facilmente la cronologia: niente password, niente cookie,
+ niente elementi traccianti<br><br>NAVIGAZIONE PIÙ VELOCE<br>• Senza elementi traccianti e annunci pubblicitari ad appesantirle, le pagine web si caricano più velocemente<br><br>SVILUPPATO DA MOZILLA<br>• Ogn
+i utente dovrebbe avere il pieno controllo della propria esperienza online e Mozilla si batte per questo diritto dal 1998.', 'offer': [{'micros': '0', 'currencyCode': 'AUD', 'formattedAmount': '', 'checkoutFl
+owRequired': False, 'offerType': 1, 'message': 'Acquista'}], 'availability': {'restriction': 1}, 'image': [{'imageType': 2, 'dimension': {'width': 0, 'height': 0}, 'imageUrl': 'https://play-lh.googleuserconte
+nt.com/ao4KdobNMn6ovm2NfXGRYcD0mfeFc4v5BKQAia4-1hprbqnScMMnjEm4-uVPweE5MuMG', 'supportsFifeUrlOptions': True, 'color': '#923A8F'}, {'imageType': 4, 'dimension': {'width': 512, 'height': 512}, 'imageUrl': 'htt
+ps://play-lh.googleusercontent.com/yssuOUUgzoiZve-NfSvkykhAP9QbnFEL-NfLNHmTjnAcLCMnEpZsvwg1brdSuRZrqg', 'supportsFifeUrlOptions': True, 'color': '#000000'}, {'imageType': 1, 'dimension': {'width': 0, 'height'
+: 0}, 'imageUrl': 'https://play-lh.googleusercontent.com/m1tRUeJ_4VRfCXKKV-i1GyB1bA5wDOPRpyxir4p00ksVukKUUMOH29GqYhe20sUe0oc', 'supportsFifeUrlOptions': True}, {'imageType': 1, 'dimension': {'width': 0, 'heig
+ht': 0}, 'imageUrl': 'https://play-lh.googleusercontent.com/ImGEB2-UcKh6E8ciFsQZkFS4elKQCMACi_10RCmmMoiTse1EZizV_xaqNcqfCdlWdtw', 'supportsFifeUrlOptions': True}, {'imageType': 1, 'dimension': {'width': 0, 'h
+eight': 0}, 'imageUrl': 'https://play-lh.googleusercontent.com/k0JqQPaKGhqNF-Q6brNoBXK6war7yt6N9DlAme2p3ii13J3sp3rSx4M9EKXhmEnsMg8c', 'supportsFifeUrlOptions': True}, {'imageType': 1, 'dimension': {'width': 0
+, 'height': 0}, 'imageUrl': 'https://play-lh.googleusercontent.com/wKWfFVfwnGEfSuq6PNbrPZgCAetwZ_GjwR-opvhcMBxXQbx3CBo4r76crkSKo2wUWjg', 'supportsFifeUrlOptions': True}], 'details': {'appDetails': {'developer
+Name': 'Mozilla', 'versionCode': 372710359, 'versionString': '118.1.0', 'installationSize': '79418572', 'permission': ['android.permission.ACCESS_COARSE_LOCATION', 'android.permission.ACCESS_FINE_LOCATION', '
+android.permission.ACCESS_NETWORK_STATE', 'android.permission.CAMERA', 'android.permission.DOWNLOAD_WITHOUT_NOTIFICATION', 'android.permission.FOREGROUND_SERVICE', 'android.permission.HIGH_SAMPLING_RATE_SENSO
+RS', 'android.permission.INTERNET', 'android.permission.MODIFY_AUDIO_SETTINGS', 'android.permission.POST_NOTIFICATIONS', 'android.permission.QUERY_ALL_PACKAGES', 'android.permission.READ_EXTERNAL_STORAGE', 'a
+ndroid.permission.READ_MEDIA_AUDIO', 'android.permission.READ_MEDIA_IMAGES', 'android.permission.READ_MEDIA_VIDEO', 'android.permission.RECEIVE_BOOT_COMPLETED', 'android.permission.RECORD_AUDIO', 'android.per
+mission.REQUEST_INSTALL_PACKAGES', 'android.permission.USE_BIOMETRIC', 'android.permission.USE_FINGERPRINT', 'android.permission.WAKE_LOCK', 'android.permission.WRITE_EXTERNAL_STORAGE', 'com.android.launcher.
+permission.INSTALL_SHORTCUT', 'com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE', 'com.google.android.gms.permission.AD_ID', 'com.samsung.android.providers.context.permission.WRITE_USE_A
+PP_FEATURE_SURVEY', 'org.mozilla.focus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'], 'developerEmail': 'android-marketplace-notices@mozilla.com', 'developerWebsite': 'https://support.mozilla.org/products/focus-
+firefox/firefox-focus-android', 'numDownloads': 'Più di 10.000.000 download', 'packageName': 'org.mozilla.focus', 'uploadDate': '27 set 2023', 'file': [{'fileType': 0, 'versionCode': 372710359, 'size': '79418
+572'}], 'unstable': True, 'dependencies': {'unknown2': '79418572', 'dependency': [{'packageName': 'com.google.android.gms', 'version': 12451000}], 'unknown3': 33}, 'testingProgramInfo': {'subscribed': False, 
+'subscribed1': False}}}, 'aggregateRating': {'type': 2, 'starRating': 4.55, 'ratingsCount': '156272', 'oneStarRatings': '6918', 'twoStarRatings': '2594', 'threeStarRatings': '6918', 'fourStarRatings': '20755'
+, 'fiveStarRatings': '118912', 'commentCount': '415'}, 'relatedLinks': {'privacyPolicyUrl': 'https://www.mozilla.org/privacy/firefox-focus/', 'rated': {'label': '3 anni', 'image': {'imageType': 6, 'dimension'
+: {'width': 512, 'height': 487}, 'imageUrl': 'https://play-lh.googleusercontent.com/EbEX3AN4FC4pu3lsElAHCiksluOVU8OgkgtWC43-wmm_aHVq2D65FmEM97bPexilUAvlAY5_4ARH8Tb3RxQ', 'supportsFifeUrlOptions': True}, 'lear
+nMoreHtmlLink': 'Gli utenti interagiscono, Internet senza limitazioni<br/><a href="https://support.google.com/googleplay?p=appgame_ratings">Scopri di più</a>'}}, 'detailsUrl': 'details?doc=org.mozilla.focus',
+ 'shareUrl': 'https://play.google.com/store/apps/details?id=org.mozilla.focus', 'reviewsUrl': 'rev?doc=org.mozilla.focus&n=20', 'detailsReusable': True, 'unknownCategoryContainer': {}, 'unknown25': {'item': [
+{'label': 'Offerto da', 'container': {'value': 'Mozilla'}}, {'label': 'E-mail sviluppatore', 'container': {'value': 'android-marketplace-notices@mozilla.com'}}, {'label': 'Data di uscita', 'container': {'value': '19 giu 2017'}}]}, 'descriptionShort': 'Il browser veloce e attento alla privacy. Da Firefox, un browser di cui fidarsi.', 'reviewQuestionsUrl': 'reviewQuestions?doc=org.mozilla.focus'}
+
+
+
+完善爬虫代码
+配对app统计
+google api download 脚本 
+google api doc - 用处

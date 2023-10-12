@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -39,7 +40,9 @@ namespace CareTakerCT.Controllers
         // GET: DoctorRatings/Create
         public ActionResult Create()
         {
-            ViewBag.DoctorId = new SelectList(db.Users, "Id", "Email");
+            var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
+            var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
+            ViewBag.DoctorId = new SelectList(doctors, "Id", "FullName");
             return View();
         }
 
@@ -54,11 +57,18 @@ namespace CareTakerCT.Controllers
             {
                 db.DoctorRatings.Add(doctorRatings);
                 db.SaveChanges();
+                ApplicationUser doctor = db.Users.Where(u => u.Id == doctorRatings.DoctorId).FirstOrDefault();
+                doctor.DoctorRatings.Add(doctorRatings);
+                db.Users.AddOrUpdate(doctor);
+                db.SaveChanges();
+
+                ApplicationUser doctor1 = db.Users.Where(u => u.Id == doctorRatings.DoctorId).FirstOrDefault();
+
                 return RedirectToAction("Index");
             }
 
             ViewBag.DoctorId = new SelectList(db.Users, "Id", "Email", doctorRatings.DoctorId);
-            return View(doctorRatings);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: DoctorRatings/Edit/5

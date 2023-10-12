@@ -50,7 +50,7 @@ function initMap() {
                     lng: position.coords.longitude
                 };
                 map.setCenter(pos);
-                map.setZoom(100);
+                map.setZoom(15);
             },
             
             () => {

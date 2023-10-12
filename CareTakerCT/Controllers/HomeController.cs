@@ -3,10 +3,12 @@ using CareTakerCT.Utils;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace CareTakerCT.Controllers
@@ -31,60 +33,146 @@ namespace CareTakerCT.Controllers
 
         public ActionResult Contact()
         {
-
-            return View(new SendEmail());
-        }
-
-        [HttpPost]
-        public ActionResult Contact(SendEmail model, HttpPostedFileBase postedFile)
-        {
-            ModelState.Clear();
-            if (ModelState.IsValid)
+            List<Clinic> clinics = db.Clinics.ToList();
+            var doctors = new List<ApplicationUser>();
+            foreach (Clinic clinic in clinics)
             {
-                try
-                {
-
-                    //var myUniqueFileName = string.Format(@"{0}", Guid.NewGuid());
-                    //model.file.Path = myUniqueFileName;
-
-                    //string serverPath = Server.MapPath("~/Uploads/");
-                    //string fileExtension = Path.GetExtension(postedFile.FileName);
-                    //string filePath = model.file.Path + fileExtension;
-                    //model.file.Path = filePath;
-                    //postedFile.SaveAs(serverPath + model.file.Path);
-                    //// db.Images.Add(model.file);
-                    //db.SaveChanges();
-
-
-                    String toEmail = model.ToEmail;
-                    String subject = model.Subject;
-                    String contents = model.Contents;
-
-                    db.SendEmails.Add(model);
-                    db.SaveChanges();
-
-                    // Retrieve user email based on userId and define as fromEmail
-                    var userId = User.Identity.GetUserId();
-                    var user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
-                    String fromEmail = user.Email;
-
-                    EmailSender es = new EmailSender();
-                    es.Send(fromEmail, toEmail, subject, contents);
-
-                    ViewBag.Result = "Email has been send.";
-
-                    ModelState.Clear();
-
-                    return View(new SendEmail());
-                }
-                catch
-                {
-                    return View();
-                }
+                var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
+                doctors.Add(d);
             }
 
-            return View();
+
+
+            var viewModel = new ClinicDoctorEmailViewModels
+            {
+                Doctors = doctors,
+                Clinics = db.Clinics.ToList(),
+                SendEmail = new SendEmail(),
+            };
+
+            return View(viewModel);
+
         }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> Contact(ClinicDoctorEmailViewModels viewModel, HttpPostedFileBase postedFile, string[] selectedDoctors, int? SelectedClinicId)
+        {
+            // Initialize the viewmodel when make a post request
+            List<Clinic> clinics = db.Clinics.ToList();
+            var doctors = new List<ApplicationUser>();
+            foreach (Clinic clinic in clinics)
+            {
+                var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
+                doctors.Add(d);
+            }
+
+            viewModel.Clinics = clinics;
+            viewModel.Doctors = doctors;
+
+
+            try
+            {
+
+                // Send emails to selected doctors
+                if (selectedDoctors != null && selectedDoctors.Length > 0)
+                {
+                    foreach (var doctorId in selectedDoctors)
+                    {
+                        var doctor = db.Users.Where(u => u.Id == doctorId).FirstOrDefault();
+                        if (doctor != null)
+                        {
+                            // Email sending logic
+
+                            // Handle file upload
+                            Files file = null;
+                            if (postedFile != null)
+                            {
+                                string fileName = Path.GetFileName(postedFile.FileName);
+
+                                // Save the file to the Uploads directory
+                                string serverPath = Server.MapPath("~/Uploads/");
+                                string filePath = serverPath + fileName;
+                                // check if file not exist
+                                if (!System.IO.File.Exists(filePath))
+                                {
+                                    // save file into folder directory
+                                    postedFile.SaveAs(filePath);
+                                }
+                                else
+                                {
+                                    // delete file from folder
+                                    System.IO.File.Delete(filePath);
+
+                                    // save file into folder directory
+                                    postedFile.SaveAs(filePath);
+                                }
+
+
+                                // Set the file information in the SendEmail model
+                                file = new Files
+                                {
+                                    Path = filePath, // Save the file path or any relevant information
+                                    Name = fileName,
+                                };
+                                db.Files.Add(file);
+                                db.SaveChanges();
+
+                                viewModel.SendEmail.file = file;
+                            }
+
+                            // Handle plain text and other related email components
+                            String toEmail = doctor.Email;
+                            String subject = viewModel.SendEmail.Subject;
+                            String contents = viewModel.SendEmail.Contents;
+
+                            // Save to database
+                            viewModel.SendEmail.ToEmail = doctor.Email;
+
+                            db.SendEmails.Add(viewModel.SendEmail);
+                            db.SaveChanges();
+
+                            // Retrieve user email based on userId as from Email
+                            if (User.Identity.GetUserId() != null)
+                            {
+                                var userId = User.Identity.GetUserId();
+                                var user = db.Users.Where(u => u.Id == userId).FirstOrDefault();
+                                String fromEmail = user.Email;
+
+                                // Send the email
+                                EmailSender es = new EmailSender();
+
+                                HostingEnvironment.QueueBackgroundWorkItem(cy => es.Send(fromEmail, toEmail, subject, contents, file));
+
+                                ViewBag.Pass = true;
+                                ViewBag.Result = "Emails have been sent successfully";
+
+                                ModelState.Clear();
+                                viewModel.SendEmail = new SendEmail();
+
+                            }
+                            else // back end validation (In case Front end validation is violated)
+                            {
+                                ViewBag.Result = "You need to log in first!";
+                            }
+                        }
+                    }
+                    ;
+                }
+                else
+                {
+                    ViewBag.Pass = false;
+                    ViewBag.Result = "Please select at least one doctor to send email!";
+                }
+            }
+            catch
+            {
+                ViewBag.Pass = false;
+                ViewBag.Result = "An error occurred while sending emails or processing the file upload";
+
+            }
+
+            return View(viewModel);
+        }
     }
 }
