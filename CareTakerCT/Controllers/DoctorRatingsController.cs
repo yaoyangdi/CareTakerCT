@@ -22,21 +22,6 @@ namespace CareTakerCT.Controllers
             return View(doctorRatings.ToList());
         }
 
-        // GET: DoctorRatings/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DoctorRatings doctorRatings = db.DoctorRatings.Find(id);
-            if (doctorRatings == null)
-            {
-                return HttpNotFound();
-            }
-            return View(doctorRatings);
-        }
-
         // GET: DoctorRatings/Create
         public ActionResult Create()
         {
@@ -61,9 +46,6 @@ namespace CareTakerCT.Controllers
                 doctor.DoctorRatings.Add(doctorRatings);
                 db.Users.AddOrUpdate(doctor);
                 db.SaveChanges();
-
-                ApplicationUser doctor1 = db.Users.Where(u => u.Id == doctorRatings.DoctorId).FirstOrDefault();
-
                 return RedirectToAction("Index");
             }
 
@@ -71,6 +53,7 @@ namespace CareTakerCT.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "admin")]
         // GET: DoctorRatings/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -87,6 +70,7 @@ namespace CareTakerCT.Controllers
             return View(doctorRatings);
         }
 
+        [Authorize(Roles = "admin")]
         // POST: DoctorRatings/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -104,6 +88,8 @@ namespace CareTakerCT.Controllers
             return View(doctorRatings);
         }
 
+
+        [Authorize(Roles = "admin")]
         // GET: DoctorRatings/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -119,6 +105,7 @@ namespace CareTakerCT.Controllers
             return View(doctorRatings);
         }
 
+        [Authorize(Roles ="admin")]
         // POST: DoctorRatings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
