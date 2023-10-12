@@ -43,28 +43,12 @@
                     {
                         var location = Model.Clinics[i].Address;
                         var doctor = Model.Doctors[i];
+                        var doctorRating = Model.DoctorRatings[i];
                         <tr>
                             <td><input type="checkbox" name="selectedDoctors" value="@doctor.Id" /></td>
                             <td>@doctor.FirstName @doctor.LastName</td>
                             <td>@doctor.Email</td>
-                            <td>
-                                @{
-                                    if (doctor.DoctorRatings != null)
-                                    {
-                                        var averageRating = doctor.DoctorRatings
-                                        .Select(d => d.Value)
-                                        .DefaultIfEmpty(0)
-                                        .Average();
-
-                                        @averageRating
-                                    }
-                                    else
-                                    {
-                                        @:"No data"
-                                    }
-                                }
-                            </td>
-
+                            <td>@doctorRating</td>
                             <td>@location</td>
                         </tr>
                     }

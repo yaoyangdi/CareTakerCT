@@ -1,4 +1,5 @@
-﻿using CareTakerCT.Models;
+﻿using CareTakerCT.Migrations;
+using CareTakerCT.Models;
 using CareTakerCT.Utils;
 using Microsoft.AspNet.Identity;
 using System;
@@ -34,20 +35,33 @@ namespace CareTakerCT.Controllers
         public ActionResult Contact()
         {
             List<Clinic> clinics = db.Clinics.ToList();
+            var doctorRatings = new List<float>();
             var doctors = new List<ApplicationUser>();
+            
             foreach (Clinic clinic in clinics)
             {
                 var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
                 doctors.Add(d);
             }
 
+            foreach (ApplicationUser doc in doctors)
+            {
+                var d = db.DoctorRatings.Where(dr => dr.DoctorId == doc.Id)
+                            .Select(dr => dr.Value) // Select the rating values
+                            .DefaultIfEmpty(0)     // Handle empty collection
+                            .Average();            // Calculate the average
+
+                doctorRatings.Add((float)d);
+            }
 
 
-            var viewModel = new ClinicDoctorEmailViewModels
+
+            var viewModel = new Models.ClinicDoctorEmailViewModels
             {
                 Doctors = doctors,
                 Clinics = db.Clinics.ToList(),
                 SendEmail = new SendEmail(),
+                DoctorRatings = doctorRatings,
             };
 
             return View(viewModel);
@@ -56,20 +70,32 @@ namespace CareTakerCT.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> Contact(ClinicDoctorEmailViewModels viewModel, HttpPostedFileBase postedFile, string[] selectedDoctors, int? SelectedClinicId)
+        public async Task<ActionResult> Contact(Models.ClinicDoctorEmailViewModels viewModel, HttpPostedFileBase postedFile, string[] selectedDoctors, int? SelectedClinicId)
         {
             // Initialize the viewmodel when make a post request
             List<Clinic> clinics = db.Clinics.ToList();
             var doctors = new List<ApplicationUser>();
+            var doctorRatings = new List<float>();
+
             foreach (Clinic clinic in clinics)
             {
                 var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
                 doctors.Add(d);
             }
 
+            foreach (ApplicationUser doc in doctors)
+            {
+                var d = db.DoctorRatings.Where(dr => dr.DoctorId == doc.Id)
+                            .Select(dr => dr.Value) // Select the rating values
+                            .DefaultIfEmpty(0)     // Handle empty collection
+                            .Average();            // Calculate the average
+
+                doctorRatings.Add((float)d);
+            }
+
             viewModel.Clinics = clinics;
             viewModel.Doctors = doctors;
-
+            viewModel.DoctorRatings = doctorRatings;
 
             try
             {
