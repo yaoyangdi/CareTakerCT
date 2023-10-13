@@ -160,7 +160,6 @@ namespace CareTakerCT.Controllers
         }
 
 
-        [ValidateAntiForgeryToken]  // We also use this annotation to prevent malicious script
         [Authorize(Roles = "admin,doctor")]
         // GET: Appointments/Edit/5
         public ActionResult Edit(int? id)
@@ -214,7 +213,7 @@ namespace CareTakerCT.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Appointment appointment = db.Appointments.Find(id);
+            Appointment appointment = db.Appointments.Where(a => a.Id == id).Include(a => a.Doctor).Include(a => a.Clinic).FirstOrDefault();
             if (appointment == null)
             {
                 return HttpNotFound();

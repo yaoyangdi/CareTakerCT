@@ -12,103 +12,99 @@
     @Html.AntiForgeryToken()
 
 
-    <div class="form" style="margin-bottom:3rem">
-        <h2>Contact Our Doctors via Email</h2>
+<div class="form" style="margin-bottom:3rem">
+    <h2>Contact Our Doctors via Email</h2>
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-        @if (@ViewBag.Result != null && ViewBag.Pass != true)
-        {
-            <div class="alert alert-danger col-md-6">@ViewBag.Result</div>
-        }
-
-        <h5 style="margin-top: 1rem; margin-bottom: 1rem">Select Doctors</h5>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Doctor Name</th>
-                    <th>Email</th>
-                    <th>Rating</th>
-                    <th>Location</th>
-                    <th>id</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    for (int i = 0; i < Model.Clinics.Count; i++)
-                    {
-                        var location = Model.Clinics[i].Address;
-                        var doctor = Model.Doctors[i];
-                        var doctorRating = Model.DoctorRatings[i];
-                        <tr>
-                            <td><input type="checkbox" name="selectedDoctors" value="@doctor.Id" /></td>
-                            <td>@doctor.FirstName @doctor.LastName</td>
-                            <td>@doctor.Email</td>
-                            <td>@doctorRating</td>
-                            <td>@location</td>
-                            <td>@doctor.Id</td>
-                            <td>
-                                @Html.ActionLink("View Schedules", "Calendar", new { id = doctor.Id })
-                            </td>
-                        </tr>
-                    }
+    @if (@ViewBag.Result != null && ViewBag.Pass != true)
+    {
+        <div class="alert alert-danger col-md-6">@ViewBag.Result</div>
+    }
+
+    <h5 style="margin-top: 1rem; margin-bottom: 1rem">Select Doctors</h5>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Doctor Name</th>
+                <th>Email</th>
+                <th>Rating</th>
+                <th>Location</th>
+                <th>id</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                for (int i = 0; i < Model.Clinics.Count; i++)
+                {
+                    var location = Model.Clinics[i].Address;
+                    var doctor = Model.Doctors[i];
+                    var doctorRating = Model.DoctorRatings[i];
+                    <tr>
+                        <td><input type="checkbox" name="selectedDoctors" value="@doctor.Id" /></td>
+                        <td>@doctor.FirstName @doctor.LastName</td>
+                        <td>@doctor.Email</td>
+                        <td>@doctorRating</td>
+                        <td>@location</td>
+                        <td>@doctor.Id</td>
+                        <td>
+                            @Html.ActionLink("View Schedules", "Calendar", new { id = doctor.Id }, new { @class = "btn btn-outline-dark  btn-sm" })
+                        </td>
+                    </tr>
                 }
+            }
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 
-        @if (@ViewBag.Result != null && ViewBag.Pass)
-        {
-            <div class="alert alert-info col-md-6" style="margin-top: 1rem">@ViewBag.Result</div>
-        }
+    @if (@ViewBag.Result != null && ViewBag.Pass)
+    {
+        <div class="alert alert-info col-md-6" style="margin-top: 1rem">@ViewBag.Result</div>
+    }
 
-        <h5 style="margin-top: 1rem; margin-bottom: 1rem">Write Emails</h5>
+    <h5 style="margin-top: 1rem; margin-bottom: 1rem">Write Emails</h5>
 
-        <div class="row" style="margin-top: 1rem;">
-            @Html.LabelFor(model => model.SendEmail.Subject, htmlAttributes: new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SendEmail.Subject, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SendEmail.Subject, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div style="margin-top: 1rem">
-
-            <div class="row" style="margin-bottom: 1rem">
-                @Html.LabelFor(model => model.SendEmail.Contents, htmlAttributes: new { @class = "col-md-2 col-control-label" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.SendEmail.Contents, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.SendEmail.Contents, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="row">
-                <label class="col-control-label col-md-2" for="postedFile">Attachment</label>
-                <div class="col-md-10" style="margin-left:-0.7rem; height: 5rem">
-                    <input type="file" name="postedFile" class="btn btn-default" accept="application/pdf, image/png, image/gif, image/jpeg" />
-                </div>
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Send Email" class="btn btn-outline-dark col-md-3" />
-            </div>
+    <div class="row" style="margin-top: 1rem;">
+        @Html.LabelFor(model => model.SendEmail.Subject, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SendEmail.Subject, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SendEmail.Subject, "", new { @class = "text-danger" })
         </div>
     </div>
 
+    <div style="margin-top: 1rem">
+
+        <div class="row" style="margin-bottom: 1rem">
+            @Html.LabelFor(model => model.SendEmail.Contents, htmlAttributes: new { @class = "col-md-2 col-control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.SendEmail.Contents, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SendEmail.Contents, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-control-label col-md-2" for="postedFile">Attachment</label>
+            <div class="col-md-10" style="margin-left:-0.7rem; height: 5rem">
+                <input type="file" name="postedFile" class="btn btn-default" accept="application/pdf, image/png, image/gif, image/jpeg" />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            @Html.ActionLink("Back to Home", "Index", "Home", new { @class = "btn btn-secondary mt-3" })
+        </div>
+    </div>
+</div>
+
 
 }
-
-<div>
-    @Html.ActionLink("Back to Home", "Index")
-</div>
 
 </main>
 
@@ -129,5 +125,5 @@
         });
     </script>
 }
-<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css"
-      rel="stylesheet" />
+<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+

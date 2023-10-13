@@ -10,114 +10,120 @@
 <p>
     @if (User.IsInRole("admin"))
     {
-        @Html.ActionLink("Create New", "Create")
+        <p style="margin-top: 2rem; margin-bottom: 2rem">
+            <a class="btn btn-outline-dark" href="/Clinics/Create">Create New Clinic</a>
+        </p>
     }
 
-</p>
+    </p>
 
-<div id="dirctions">
-    <h4>Get your way</h4>
-    <div class="row col-md-6 col-sm-12">
-        <div class="row" style="display:flex; margin-bottom: 0.5rem">
-            <div style="flex:1">
-                <label for="start" class="col-md-2 control-label">Start</label>
-                <input type="text" id="start" class="col-md-6 form-control"/>
+    <div id="dirctions">
+        <h4>Get your way</h4>
+        <div class="row col-md-6 col-sm-12">
+            <div class="row" style="display:flex; margin-bottom: 0.5rem">
+                <div style="flex:1">
+                    <label for="start" class="col-md-2 control-label">Start</label>
+                    <input type="text" id="start" class="col-md-6 form-control" />
+
+                </div>
+
+                <div style="flex:1">
+                    <label for="destination" class="col-md-2 control-label">End</label>
+                    <select id="destination" class="col-md-6 form-control">
+                        @foreach (var clinic in Model)
+                        {
+                            <option value="@clinic.Address">@clinic.Name</option>
+                        }
+                    </select>
+                </div>
 
             </div>
-
-            <div style="flex:1">
-                <label for="destination" class="col-md-2 control-label">End</label>
-                <select id="destination" class="col-md-6 form-control" >
-                    @foreach (var clinic in Model)
-                    {
-                        <option value="@clinic.Address">@clinic.Name</option>
-                    }
-                </select>
-            </div>
-
-        </div>
-        <div class="row col-md-4">
-            <label for="transportation" class="col-md-2 control-label">Transportation</label>
-            <select id="mode" class="col-md-3 form-control" style="margin-left:10px">
+            <div class="row col-md-4">
+                <label for="transportation" class="col-md-2 control-label">Transportation</label>
+                <select id="mode" class="col-md-3 form-control" style="margin-left:10px">
                     <option value="DRIVING">Driving</option>
                     <option value="WALKING">Walking</option>
                     <option value="BICYLING">Bicycling</option>
                     <option value="TRANSIT">Transit</option>
 
-            </select>
-            <input type="submit" value="Go &raquo;" class="btn btn-outline-dark col-md-5" id="route_btn" style="margin-top:10px; margin-left: 10px; border-color:black; "/>
+                </select>
+                <input type="submit" value="Go &raquo;" class="btn btn-outline-dark col-md-5" id="route_btn" style="margin-top:10px; margin-left: 10px; border-color:black; " />
 
+            </div>
         </div>
     </div>
-</div>
 
-<div id="container">
-    <div id="map"></div>
-    <div id="sidebar"></div>
-</div>
+    <div id="container">
+        <div id="map"></div>
+        <div id="sidebar"></div>
+    </div>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            @if (User.IsInRole("admin"))
-            {
-                <th>Options</th>
-            }
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
                 @if (User.IsInRole("admin"))
-
                 {
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                        <span> | </span>
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
+                    <th>Options</th>
                 }
-
-
-
             </tr>
-        }
-    </tbody>
+        </thead>
 
-</table>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+
+                    @if (User.IsInRole("admin"))
+
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                        </td>
+                    }
 
 
-@section Scripts {
 
-    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
-    @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap4.js")
+                </tr>
+            }
+        </tbody>
 
-    <script>
-        $(document).ready(function () {
-            $('.table').DataTable();
-        });
-    </script>
+    </table>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfjeLRd6YVIz8wzlBq7ajGtqnAHEw3oMs&callback=initMap&libraries=places&v=weekly" async></script>
+    <div class="row">
+        <div class="col">
+            @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-secondary mt-3" })
+        </div>
+    </div>
 
-    @Scripts.Render("~/Scripts/map.js")
-}
+    @section Scripts {
 
-<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css"
-      rel="stylesheet" />
+        @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+        @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap4.js")
+
+        <script>
+            $(document).ready(function () {
+                $('.table').DataTable();
+            });
+        </script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfjeLRd6YVIz8wzlBq7ajGtqnAHEw3oMs&callback=initMap&libraries=places&v=weekly" async></script>
+
+        @Scripts.Render("~/Scripts/map.js")
+    }
+
+    <link href="~/Content/DataTables/css/dataTables.bootstrap.min.css"
+          rel="stylesheet" />

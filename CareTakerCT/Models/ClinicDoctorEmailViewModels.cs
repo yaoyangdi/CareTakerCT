@@ -13,7 +13,7 @@ namespace CareTakerCT.Models
         public SendEmail SendEmail { get; set; }
         public Files File { get; set; }
 
-        public List<float> DoctorRatings { get; set; }
+        public List<string> DoctorRatings { get; set; }
         
 
 

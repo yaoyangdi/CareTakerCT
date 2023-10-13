@@ -34,24 +34,33 @@ namespace CareTakerCT.Controllers
 
         public ActionResult Contact()
         {
+            List<Clinic> c = db.Clinics.ToList();
             List<Clinic> clinics = db.Clinics.ToList();
-            var doctorRatings = new List<float>();
+            var doctorRatings = new List<string>();
             var doctors = new List<ApplicationUser>();
 
-            foreach (Clinic clinic in clinics)
+            foreach (Clinic clinic in c)
             {
                 var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
-                doctors.Add(d);
+                if (d != null)
+                {
+                    doctors.Add(d);
+                } else
+                {
+                    clinics.Remove(clinic);
+                }
             }
 
             foreach (ApplicationUser doc in doctors)
             {
-                var d = db.DoctorRatings.Where(dr => dr.DoctorId == doc.Id)
-                            .Select(dr => dr.Value) // Select the rating values
-                            .DefaultIfEmpty(0)     // Handle empty collection
-                            .Average();            // Calculate the average
 
-                doctorRatings.Add((float)d);
+                var averageRating = db.DoctorRatings
+                    .Where(dr => dr.DoctorId == doc.Id)
+                    .Select(dr => dr.Value)
+                    .DefaultIfEmpty(0) // Handle empty collection
+                    .Average();
+
+                doctorRatings.Add(averageRating.ToString("F1"));
             }
 
 
@@ -59,7 +68,7 @@ namespace CareTakerCT.Controllers
             var viewModel = new Models.ClinicDoctorEmailViewModels
             {
                 Doctors = doctors,
-                Clinics = db.Clinics.ToList(),
+                Clinics = clinics,
                 SendEmail = new SendEmail(),
                 DoctorRatings = doctorRatings,
             };
@@ -73,24 +82,32 @@ namespace CareTakerCT.Controllers
         public async Task<ActionResult> Contact(Models.ClinicDoctorEmailViewModels viewModel, HttpPostedFileBase postedFile, string[] selectedDoctors, int? SelectedClinicId)
         {
             // Initialize the viewmodel when make a post request
+            List<Clinic> c = db.Clinics.ToList();
             List<Clinic> clinics = db.Clinics.ToList();
             var doctors = new List<ApplicationUser>();
-            var doctorRatings = new List<float>();
+            var doctorRatings = new List<string>();
 
-            foreach (Clinic clinic in clinics)
+            foreach (Clinic clinic in c)
             {
                 var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
-                doctors.Add(d);
+                if (d != null)
+                {
+                    doctors.Add(d);
+                }
+                else
+                {
+                    clinics.Remove(clinic);
+                }
             }
 
             foreach (ApplicationUser doc in doctors)
             {
-                var d = db.DoctorRatings.Where(dr => dr.DoctorId == doc.Id)
+                var averageRating = db.DoctorRatings.Where(dr => dr.DoctorId == doc.Id)
                             .Select(dr => dr.Value) // Select the rating values
                             .DefaultIfEmpty(0)     // Handle empty collection
                             .Average();            // Calculate the average
 
-                doctorRatings.Add((float)d);
+                doctorRatings.Add(averageRating.ToString("F1"));
             }
 
             viewModel.Clinics = clinics;

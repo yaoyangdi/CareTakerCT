@@ -60,27 +60,27 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/datetimepicker")
-    <script type="text/javascript">
-        $(function () {
-            $('#BookTime').datetimepicker(
-                {
-                    format: "MM/DD/YYYY hh:mm",
-                    minDate: new moment().add(1, "days")
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/datetimepicker")
+        <script type="text/javascript">
+            $(function () {
+                $('#BookTime').datetimepicker(
+                    {
+                        format: "MM/DD/YYYY hh:mm",
+                        minDate: new moment().add(1, "days")
 
 
 
-                });
-        });
-    </script>
+                    });
+            });
+        </script>
 
 
-}
-<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
+    }
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />

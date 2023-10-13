@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<CareTakerCT.Models.Appointment>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Your Booked Appointments";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,28 +12,28 @@
 </p>
 
 
-
-
 <table class="table">
-    <thead>
+    <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BookTime)
+                Start Time
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                End Time
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clinic)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Doctor)
+                Clinic
             </th>
-
+            <th>
+                Doctor
+            </th>
             @if (User.IsInRole("admin") || User.IsInRole("doctor"))
             {
                 <th>
-                    @Html.DisplayNameFor(model => model.Patient)
+                    Patient
                 </th>
                 <th>Options</th>
             }
@@ -43,9 +43,12 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="past-appointment">
                 <td>
                     @Html.DisplayFor(modelItem => item.BookTime)
+                </td>
+                <td>
+                    @item.BookTime.AddHours(1)
                 </td>
                 <td>
                     @Html.Raw(item.Description)
@@ -64,27 +67,60 @@
                     </td>
 
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                        <span> | </span>
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
                     </td>
-
                 }
             </tr>
         }
     </tbody>
-
 </table>
 
-@section Scripts {
+<div class="row">
+    <div class="col">
+        @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-secondary mt-3" })
+    </div>
+</div>
 
+@section Scripts {
     @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
     @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap4.js")
     <script>
         $(document).ready(function () {
-            $('.table').DataTable();
+            $('.table').DataTable({
+                stripeClasses: [],
+                stripe: false, // Disable row striping
+                columnDefs: [
+                    {
+                        type: 'date', // Specify date sorting for the Start Time column
+                        targets: [0] // Index of the Start Time column (adjust if needed)
+                    },
+                    {
+                        type: 'date', // Specify date sorting for the End Time column
+                        targets: [1] // Index of the End Time column (adjust if needed)
+                    }
+                ]
+            }
+            );
+
+            // Function to check and mark past appointments
+            function markPastAppointments() {
+                var currentTime = new Date();
+                $('.past-appointment').each(function () {
+                    var endTime = new Date($(this).find('td:eq(1)').text()); // Adjust the index if needed
+                    console.log(endTime < currentTime);
+
+                    if (endTime < currentTime) {
+                        $(this).css('background-color', '#e0dede');
+                        $(this).css('color', 'gray');
+
+                    }
+                });
+            }
+
+            // Initial call to mark past appointments
+            markPastAppointments();
         });
     </script>
 }
-<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css"
-      rel="stylesheet" />
+<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
