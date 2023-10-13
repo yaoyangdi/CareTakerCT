@@ -42,6 +42,20 @@ namespace CareTakerCT.Controllers
             return View(result);
         }
 
+        public JsonResult GetAppointments(string id)
+        {
+            var appointments = new List<Appointment>();
+
+            appointments = db.Appointments.Where(a => a.DoctorId == id.ToString()).ToList();
+
+                
+            return new JsonResult
+            {
+                Data = appointments,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+            };
+        }
+
         [Authorize]
         // GET: Appointments/Details/5
         public ActionResult Details(int? id)
@@ -73,12 +87,15 @@ namespace CareTakerCT.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 
+
+
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]  // We also use this annotation to prevent malicious script
         [ValidateInput(false)]
         public ActionResult Create([Bind(Include = "Id,BookTime,Description,ClinicId,DoctorId")] Appointment appointment)
         {
+
             StringBuilder sb = new StringBuilder();
             sb.Append(HttpUtility.HtmlEncode(appointment.Description));
 
@@ -90,12 +107,45 @@ namespace CareTakerCT.Controllers
 
             if (ModelState.IsValid)
             {
-                // Here we add patientId to build the relationship between Patient and Appointment(Restrict the appointment is made from paitient)
-                appointment.PatientId = User.Identity.GetUserId();
+                // Query on the database for existing appointments
+                var existingAppointments = db.Appointments
+                    .Where(a => a.DoctorId == appointment.DoctorId)
+                    .ToList();
 
-                db.Appointments.Add(appointment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                // Check if new appointment conflicts with existing appointment
+                bool hasConflict = false;
+                foreach (var existingAppointment in existingAppointments)
+                {
+                    DateTime existingStart = existingAppointment.BookTime;
+                    DateTime existingEnd = existingStart.AddHours(1); // Assume each appointment is 1 hour long
+                    DateTime newStart = appointment.BookTime;
+                    DateTime newEnd = newStart.AddHours(1);
+
+                    if ((newStart >= existingStart && newStart < existingEnd) ||
+                        (newEnd > existingStart && newEnd <= existingEnd))
+                    {
+                        hasConflict = true;
+                        break; // once a conflict occur, we stop checking
+                    }
+                }
+
+                if (hasConflict)
+                {
+
+                    ViewBag.Result = "There is a time conflict between the new appointment and the existing appointment. Please choose another time.";
+                } else
+                {
+                    // If there are no conflicts, save the new appointment to the database
+
+                    // Here we add patientId to build the relationship between Patient and Appointment(Restrict the appointment is made from paitient)
+                    appointment.PatientId = User.Identity.GetUserId();
+
+                    db.Appointments.Add(appointment);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+
             }
             var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
             var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
@@ -193,4 +243,6 @@ namespace CareTakerCT.Controllers
             base.Dispose(disposing);
         }
     }
+
+
 }

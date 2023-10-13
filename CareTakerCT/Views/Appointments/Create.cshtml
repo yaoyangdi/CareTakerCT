@@ -8,12 +8,20 @@
 <h2>Make an apppointment</h2>
 
 
+@if (@ViewBag.Result != null)
+{
+    <div class="alert alert-danger col-md-12">@ViewBag.Result</div>
+}
+
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
+
     <div class="form-horizontal">
         <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.BookTime, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -73,9 +81,9 @@
         $(function () {
             $('#BookTime').datetimepicker(
                 {
-                    format: "MM/DD/YYYY hh:mm",
-                    minDate: new moment().add(1, "days")
-
+                    format: "MM/DD/YYYY HH:mm",
+                    minDate: new moment().add(1, "days"),
+                    stepping: 30 // Set the time step to 30 minutes
 
 
                 });

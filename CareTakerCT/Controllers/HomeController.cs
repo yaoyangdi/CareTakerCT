@@ -4,9 +4,9 @@ using CareTakerCT.Utils;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
@@ -37,7 +37,7 @@ namespace CareTakerCT.Controllers
             List<Clinic> clinics = db.Clinics.ToList();
             var doctorRatings = new List<float>();
             var doctors = new List<ApplicationUser>();
-            
+
             foreach (Clinic clinic in clinics)
             {
                 var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
@@ -200,5 +200,25 @@ namespace CareTakerCT.Controllers
 
             return View(viewModel);
         }
+
+
+        public ActionResult Calendar(string id)
+        {
+            ViewBag.DoctorId = id;
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser doctor = db.Users.Find(id);
+            if (doctor == null)
+            {
+                return HttpNotFound();
+            }
+            return View(doctor);
+
+        }
     }
+
+
 }

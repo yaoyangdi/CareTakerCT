@@ -22,16 +22,22 @@ namespace CareTakerCT
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+            bundles.Add(new Bundle("~/bundles/calendar").Include(
+                      "~/Scripts/moment.min.js",
+                      "~/Scripts/fullcalendar.js",
+                      "~/Scripts/calendar.js"));
+
             bundles.Add(new Bundle("~/bundles/datetimepicker").Include(
                       "~/Scripts/moment.min.js",
                       "~/Scripts/bootstrap-datetimepicker.js"));
-                
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/jquery.dataTables.min.css",
-                      "~/Content/bootstrap-datetimepicker.css"));
+                      "~/Content/bootstrap-datetimepicker.css",
+                      "~/Content/fullcalendar.css"));
 
             bundles.Add(new Bundle("~/bundles/map").Include(
                       "~/Scripts/map.js"));

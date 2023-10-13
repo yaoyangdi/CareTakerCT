@@ -23,9 +23,11 @@ namespace CareTakerCT.Utils
             var plainTextContent = contents;
             var htmlContent = "<p>" + contents + "</p>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-
-            if (file != null)    // Send email with attachment
+            
+            // Send email with attachment
+            if (file != null)    
             {
+                // Read from file path("~/Uploads/..") and attach in the email message
                 using (var fileStream = File.OpenRead(file.Path))
                 {
                     await msg.AddAttachmentAsync(file.Name, fileStream);

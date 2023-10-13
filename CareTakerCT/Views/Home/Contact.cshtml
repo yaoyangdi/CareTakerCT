@@ -34,11 +34,12 @@
                     <th>Email</th>
                     <th>Rating</th>
                     <th>Location</th>
+                    <th>id</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @{
-
                     for (int i = 0; i < Model.Clinics.Count; i++)
                     {
                         var location = Model.Clinics[i].Address;
@@ -50,6 +51,10 @@
                             <td>@doctor.Email</td>
                             <td>@doctorRating</td>
                             <td>@location</td>
+                            <td>@doctor.Id</td>
+                            <td>
+                                @Html.ActionLink("View Schedules", "Calendar", new { id = doctor.Id })
+                            </td>
                         </tr>
                     }
                 }

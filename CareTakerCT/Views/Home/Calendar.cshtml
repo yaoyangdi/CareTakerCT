@@ -1,0 +1,136 @@
+﻿@model CareTakerCT.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Calendar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var doctorId = ViewBag.DoctorId;
+}
+
+<main>
+
+
+    <p style="margin-top: 2rem; margin-bottom: 2rem">
+        <a class="btn btn-outline-dark" href="/Appointments/Create">Book a New Appointment</a>
+    </p>
+
+    <div id="calendar">
+    </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</main>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/calendar")
+    @Scripts.Render("~/Scripts/calendar.js")
+
+<script>
+        console.log("hello clinic details");
+$(document).ready(function () {
+    var appointments = [];
+
+    $.ajax({
+        type: "GET",
+        url: "/Appointments/GetAppointments/@doctorId",
+        success: function (data) {
+            $.each(data, function (i, v) {
+                appointments.push({
+                    eventId: v.Id,
+                    title: "Patient Appointment",
+                    description: "aa",
+                    start: moment(v.BookTime).format("YYYY-MM-DDTHH:mm:ss"),
+                    end: moment(v.BookTime).add(1, "hours").format("YYYY-MM-DDTHH:mm:ss"),
+                    isBooked: true,
+                    color: "#666666",
+                });
+            });
+
+            initializeFullCalendar(appointments);
+        },
+        error: function (error) {
+            alert("Failed to get appointment data");
+        }
+    });
+
+    function initializeFullCalendar(appointments) {
+        var calendar = $("#calendar").fullCalendar({
+            defaultView: "month",
+            contentHeight: 600,
+            businessHours: true,
+            header: {
+                left: "month, agendasWeek, today",
+                center: "title",
+                right: "prevYear, prev, next, nextYear"
+            },
+            events: appointments,
+            eventClick: function (calEvent, jsEvent, view) {
+                // Handle the event click
+                // You can switch to week view here
+                calendar.fullCalendar('changeView', 'agendaWeek');
+                calendar.fullCalendar('gotoDate', calEvent.start);
+            }
+        });
+    }
+
+
+});
+</script>
+}
+
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/calendar")
+        @Scripts.Render("~/Scripts/calendar.js")
+        <script>
+            console.log("hello clinic details");
+
+            $(document).ready(function (i, v) {
+
+
+                var appointments = []
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Appointments/GetAppointments/@doctorId",
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                            appointments.push({
+                                eventId: v.Id,
+                                title: "Patient Appointment",
+                                description: "aa",
+                                start: moment(v.BookTime).format("YYYY-MM-DDTHH:mm:ss"),
+                                end: moment(v.BookTime).add(1, "hours").format("YYYY-MM-DDTHH:mm:ss"),
+                                isBooked: true,
+                                color: "#666666",
+                            });
+
+                        });
+
+                    },
+                    error: function (error) {
+                        alert("Failed to get appointment data");
+                    }
+                })
+
+                generateCalendar(appointments);
+
+                $("#calendar").fullCalendar({
+                    defaultView: "month",
+                    contentHeight: 600,
+                    businessHours: true,
+                    header: {
+                        left: "month, agendasWeek, today",
+                        center: "title",
+                        right: "prevYear, prev, next, nextYear"
+                    },
+                    events: appointments,
+                });
+
+
+            })
+        </script>
+
+    }
+*@
