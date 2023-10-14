@@ -3,29 +3,97 @@
 }
 
 <main>
-    <section class="row" style="margin-bottom: 1rem">
-        <img 
-             srcset="~/Content/CTScan-320px.jpg 320w, ~/Content/CTScan-1024px.jpg 1024w, ~/Content/CTScan-640px.jpg 640w"
-             sizes="(max-width: 320px) 320px, ((max-width: 640px) and (min-width: 321px)) 640px, 640px"
-             src="~/Content/CTScan-320px.jpg"
-             alt="CT Scan" 
-         />
+    <section class="row" style="position: relative;">
+        <img src="~/Content/CTScan-320px.jpg" srcset="~/Content/CTScan-320px.jpg 320w, ~/Content/CTScan-1024px.jpg 1024w, ~/Content/CTScan-640px.jpg 640w" sizes="(max-width: 320px) 320px, ((max-width: 640px) and (min-width: 321px)) 640px, 640px" alt="CT Scan">
+        <div class="image-overlay">
+            <h1>CareTaker, Your next CT</h1>
+            <p>Schedule your medical appointments now to ensure timely access to the treatment and care you require.</p>
+            <a class="btn btn-outline-dark" href="/Appointments/index">Book An Appointment</a>
+        </div>
     </section>
 
-    <div class="row" >
-        <section class="col-md-4">
-            <p> Schedule your medical appointments now to ensure timely access to the treatment and care you require. </p>
+    <div class="row">
+        <section class="col-md-6">
+            <h2>Schedule Your Medical Appointments</h2>
+            <p>Schedule your medical appointments now to ensure timely access to the treatment and care you require.</p>
             <p><a class="btn btn-outline-dark" href="/Appointments/index">Book An Appointment</a></p>
         </section>
 
-        <section class="col-md-4" >
+        <section class="col-md-6">
+            <h2>Doctor Appointments Growth Chart</h2>
+            <p>See the recent growth in doctor appointments.</p>
+            <p><a class="btn btn-outline-dark" href="/Appointments/DoctorAppointmentsChart">View Chart</a></p>
+        </section>
+
+        <section class="col-md-6">
+            <h2>Find the Nearest Clinic</h2>
+            <p>Browse our network of partner clinics to find the one nearest to you, making it easier to access medical services.</p>
+            <p><a class="btn btn-outline-dark" href="/Clinics/index">View Available Clinics</a></p>
+        </section>
+
+        <section class="col-md-6">
+            <h2>Contact Our Professional Medical Team</h2>
             <p>If you have any questions or need to consult with a doctor, feel free to reach out to our professional medical team.</p>
             <p><a class="btn btn-outline-dark" href="/Home/Contact">Contact Our Doctors</a></p>
         </section>
 
-        <section class="col-md-4">
-            <p>Browse our network of partner clinics to find the one nearest to you, making it easier to access medical services.</p>
-            <p><a class="btn btn-outline-dark" href="/Clinics/index">View Available Clinics</a></p>
-        </section>
     </div>
 </main>
+
+
+<style>
+    body {
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        filter: brightness(70%);
+    }
+    .image-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        padding: 10px;
+    }
+
+    section {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    h2 {
+        margin-top: 10px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    a.btn {
+        text-decoration: none;
+        font-size: 18px;
+    }
+
+    .btn-outline-dark {
+        background-color: transparent;
+        border: 2px solid #727f8c;
+        color: #727f8c;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-outline-dark:hover {
+        background-color: #343a40;
+        border: 2px solid #a7b4c2;
+        color: #fff;
+    }
+</style>

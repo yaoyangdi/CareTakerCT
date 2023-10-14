@@ -25,6 +25,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/calendar")
     @Scripts.Render("~/Scripts/calendar.js")
+    <script src="~/Scripts/notify.min.js" defer></script>
 
     <script>
         console.log("Hello clinic details");
@@ -65,6 +66,23 @@
                         right: "prevYear, prev, next, nextYear"
                     },
                     events: appointments,
+
+                    // Handle day click to book a new appointment
+                    dayClick: function (date, jsEvent, view) {
+                        var selectedDate = date.format(); // Get the selected date
+
+                        // Check if the selected date is in the past
+                        if (moment(selectedDate) < moment()) {
+                            // Display a notification for past events
+                            $.notify("Unable to book past event", "error");
+                        } else {
+                            window.location.href = '/Appointments/create/';
+
+                        }
+                    },
+
+
+                    // Handle event click to view in detailed (First in week view, and then appointment details if keep clicking)
                     eventClick: function (calEvent, jsEvent, view) {
                         if (view.name === 'agendaWeek') {
                             // If the current view is 'agendaWeek', redirect to event details page
@@ -75,6 +93,8 @@
                             calendar.fullCalendar('gotoDate', calEvent.start);
                         }
                     },
+
+                    // Distinguish between past and future appointments with different colors
                     eventRender: function(eventObj, $el) {
                         // Check if the event is in the future
                         var currentTime = new Date();

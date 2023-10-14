@@ -1,12 +1,13 @@
 ﻿@model CareTakerCT.Models.DoctorRatings
 
 @{
+    ViewBag.Title = "Your Feedback Matters";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <h2 class="mt-4">Your Feedback Matters</h2>
+<h2>Your Feedback Matters</h2>
 
+<div class="container">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

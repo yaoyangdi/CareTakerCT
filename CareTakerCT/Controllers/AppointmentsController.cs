@@ -106,7 +106,8 @@ namespace CareTakerCT.Controllers
             appointment.Description = strDes;
 
             if (ModelState.IsValid)
-            {
+            {   
+
                 // Query on the database for existing appointments
                 var existingAppointments = db.Appointments
                     .Where(a => a.DoctorId == appointment.DoctorId)
