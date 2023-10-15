@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CareTakerCT.Models.DoctorAppointmentData>
+
+@{
+    ViewBag.Title = "Chart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Doctor Appointments Chart</h2>
+
+<main>
+    <canvas id="doctorAppointmentsChart" style="width:100%; height:500px"></canvas>
+</main>
+
+@section Scripts {
+    @Scripts.Render("https://cdn.jsdelivr.net/npm/chart.js")
+    <script>
+        // 从 Razor 模型中提取数据并传递给 JavaScript 变量
+        var chartData = @Html.Raw(Json.Encode(Model));
+
+        console.log(chartData);
+        // 提取日期和医生名称数据
+        var dates = chartData.map(data => new Date(data.Date)); // 转换日期为 JavaScript Date 对象
+        var doctorNames = chartData.map(data => data.DoctorName);
+
+        // 提取每个医生的预约计数数据
+        var appointmentCounts = chartData.map(data => data.AppointmentCount);
+
+        // Create Chart.js chart
+        var ctx = document.getElementById('doctorAppointmentsChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: doctorNames.map((name, index) => ({
+                    label: name,
+                    data: appointmentCounts[index],
+                    borderWidth: 1,
+                    fill: false
+                }))
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}

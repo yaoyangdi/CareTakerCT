@@ -3,6 +3,8 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -23,7 +25,7 @@ namespace CareTakerCT.Controllers
             var UserId = User.Identity.GetUserId();
 
             // Initialization and also avoid unauthorized access
-            var result = new List<Appointment>(); 
+            var result = new List<Appointment>();
 
             if (User.IsInRole("doctor"))
             {
@@ -48,7 +50,7 @@ namespace CareTakerCT.Controllers
 
             appointments = db.Appointments.Where(a => a.DoctorId == id.ToString()).ToList();
 
-                
+
             return new JsonResult
             {
                 Data = appointments,
@@ -65,7 +67,7 @@ namespace CareTakerCT.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var appointment = db.Appointments.Where(a=>a.Id ==id).Include(a => a.Doctor).Include(a => a.Clinic).FirstOrDefault();
+            var appointment = db.Appointments.Where(a => a.Id == id).Include(a => a.Doctor).Include(a => a.Clinic).FirstOrDefault();
             if (appointment == null)
             {
                 return HttpNotFound();
@@ -73,6 +75,7 @@ namespace CareTakerCT.Controllers
             return View(appointment);
         }
         [Authorize]
+        [Route("Appointments/Create/")]
         // GET: Appointments/Create
         public ActionResult Create()
         {
@@ -83,12 +86,33 @@ namespace CareTakerCT.Controllers
             ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name");
             return View();
         }
+
+        [Authorize]
+        // GET: Appointments/Create
+        [Route("Appointments/Create/{date}")]
+        public ActionResult Create(string date)
+        {
+            // Convert the string to a DateTime object
+            if (DateTime.TryParse(date, out DateTime parsedDate))
+            {
+                // Format the date in "MM/DD/YYYY HH:mm" format
+                string formattedDate = parsedDate.ToString("MM/dd/yyyy HH:mm");
+
+                ViewBag.Date = formattedDate; // Pass the formatted date to the view
+            }
+
+            var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
+            var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
+
+            ViewBag.DoctorId = new SelectList(doctors, "Id", "FirstName");
+            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name");
+            return View();
+        }
+
+
         // POST: Appointments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-
-
-
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]  // We also use this annotation to prevent malicious script
@@ -106,7 +130,7 @@ namespace CareTakerCT.Controllers
             appointment.Description = strDes;
 
             if (ModelState.IsValid)
-            {   
+            {
 
                 // Query on the database for existing appointments
                 var existingAppointments = db.Appointments
@@ -134,7 +158,8 @@ namespace CareTakerCT.Controllers
                 {
 
                     ViewBag.Result = "There is a time conflict between the new appointment and the existing appointment. Please choose another time.";
-                } else
+                }
+                else
                 {
                     // If there are no conflicts, save the new appointment to the database
 
@@ -242,7 +267,29 @@ namespace CareTakerCT.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult Chart()
+        {
+            var oneMonthAgo = DateTime.Now.AddMonths(-1);
+
+            var chartData = db.Appointments
+                .AsEnumerable() 
+                .Where(appointment => appointment.BookTime >= oneMonthAgo) 
+                .GroupBy(appointment => new
+                {
+                    DoctorId = appointment.DoctorId,
+
+                })
+                .Select(group => new DoctorAppointmentData
+                {
+                    DoctorName = db.Users.Where(d => d.Id == group.Key.DoctorId).FirstOrDefault().FullName,
+                    Date = group.FirstOrDefault().BookTime,
+                    AppointmentCount = group.Count()
+                })
+                .ToList();
+
+            return View(chartData);
+        }
     }
 
 
-}
+    }

@@ -217,22 +217,51 @@ namespace CareTakerCT.Controllers
 
             return View(viewModel);
         }
-
-
         public ActionResult Calendar(string id)
         {
-            ViewBag.DoctorId = id;
-
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                // Initialize the viewmodel when make a post request
+                List<Clinic> c = db.Clinics.ToList();
+                List<Clinic> clinics = db.Clinics.ToList();
+                var doctors = new List<ApplicationUser>();
+                var doctorRatings = new List<string>();
+
+                foreach (Clinic clinic in c)
+                {
+                    var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
+                    if (d != null)
+                    {
+                        doctors.Add(d);
+                    }
+                    else
+                    {
+                        clinics.Remove(clinic);
+                    }
+                }
+
+                foreach (ApplicationUser doc in doctors)
+                {
+                    var averageRating = db.DoctorRatings.Where(dr => dr.DoctorId == doc.Id)
+                                .Select(dr => dr.Value) // Select the rating values
+                                .DefaultIfEmpty(0)     // Handle empty collection
+                                .Average();            // Calculate the average
+
+                    doctorRatings.Add(averageRating.ToString("F1"));
+                }
+
+                ViewBag.Clinics = clinics;
+                ViewBag.Doctors = doctors;
+                ViewBag.DoctorRatings = doctorRatings;
+                return View();
             }
             ApplicationUser doctor = db.Users.Find(id);
             if (doctor == null)
             {
                 return HttpNotFound();
             }
-            return View(doctor);
+            ViewBag.DoctorId = id;
+            return View();
 
         }
     }

@@ -14,15 +14,15 @@
 
     <div class="row">
         <section class="col-md-6">
-            <h2>Schedule Your Medical Appointments</h2>
-            <p>Schedule your medical appointments now to ensure timely access to the treatment and care you require.</p>
-            <p><a class="btn btn-outline-dark" href="/Appointments/index">Book An Appointment</a></p>
+            <h2>View Doctor's Schedule</h2>
+            <p>You can check the doctor's schedule to book your appointments and ensure timely access to the treatment and care you need.</p>
+            <p><a class="btn btn-outline-dark" href="/Home/Calendar">Check Doctor's Schedule</a></p>
         </section>
 
         <section class="col-md-6">
             <h2>Doctor Appointments Growth Chart</h2>
-            <p>See the recent growth in doctor appointments.</p>
-            <p><a class="btn btn-outline-dark" href="/Appointments/DoctorAppointmentsChart">View Chart</a></p>
+            <p>Discover and analyze the recent trends in doctor appointments, providing valuable insights into our healthcare services.</p>
+            <p><a class="btn btn-outline-dark" href="/Appointments/Chart">View Chart</a></p>
         </section>
 
         <section class="col-md-6">
@@ -40,7 +40,6 @@
     </div>
 </main>
 
-
 <style>
     body {
         background-color: #f5f5f5;
@@ -53,6 +52,7 @@
         height: auto;
         filter: brightness(70%);
     }
+
     .image-overlay {
         position: absolute;
         top: 50%;
@@ -95,5 +95,25 @@
         background-color: #343a40;
         border: 2px solid #a7b4c2;
         color: #fff;
+    }
+
+    @@media (max-width: 768px) {
+        .image-overlay {
+            padding: 1rem; /* Decrease the padding to make it smaller */
+        }
+
+        h1 {
+            font-size: 24px; /* Adjust the font size for h2 on smaller screens */
+        }
+        h2 {
+            font-size: 20px; /* Adjust the font size for h2 on smaller screens */
+        }
+        p {
+            font-size: 14px; /* Adjust the font size for paragraphs on smaller screens */
+        }
+        a.btn {
+            font-size: 16px; /* Adjust the font size for button links on smaller screens */
+            padding: 5px 10px; /* Adjust padding for smaller screens */
+        }
     }
 </style>

@@ -73,15 +73,16 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/datetimepicker")
+
 
     <script type="text/javascript">
         $(function () {
             $('#BookTime').datetimepicker(
                 {
+                    date: moment("@ViewBag.Date", "MM/DD/YYYY HH:mm"), // Set the default date and time
                     format: "MM/DD/YYYY HH:mm",
                     minDate: new moment().add(1, "days"),
                     stepping: 30 // Set the time step to 30 minutes

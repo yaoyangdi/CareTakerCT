@@ -10,10 +10,10 @@
 <p>
     @if (User.IsInRole("admin"))
     {
-        <p style="margin-top: 2rem; margin-bottom: 2rem">
-            <a class="btn btn-outline-dark" href="/Clinics/Create">Create New Clinic</a>
-        </p>
-    }
+    <p style="margin-top: 2rem; margin-bottom: 2rem">
+        <a class="btn btn-outline-dark" href="/Clinics/Create">Create New Clinic</a>
+    </p>
+}
 
     </p>
 
@@ -58,72 +58,73 @@
         <div id="sidebar"></div>
     </div>
 
+    <div class="table-responsive">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
-                @if (User.IsInRole("admin"))
-                {
-                    <th>Options</th>
-                }
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model)
-            {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
                     @if (User.IsInRole("admin"))
-
                     {
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
-                        </td>
+                        <th>Options</th>
                     }
-
-
-
                 </tr>
-            }
-        </tbody>
+            </thead>
 
-    </table>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
 
-    <div class="row">
-        <div class="col">
-            @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-secondary mt-3" })
-        </div>
+                        @if (User.IsInRole("admin"))
+
+                        {
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                            </td>
+                        }
+
+
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
     </div>
+        <div class="row">
+            <div class="col">
+                @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-secondary mt-3" })
+            </div>
+        </div>
 
-    @section Scripts {
+        @section Scripts {
 
-        @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
-        @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap4.js")
+            @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+            @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap4.js")
 
-        <script>
-            $(document).ready(function () {
-                $('.table').DataTable();
-            });
-        </script>
+            <script>
+                $(document).ready(function () {
+                    $('.table').DataTable();
+                });
+            </script>
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfjeLRd6YVIz8wzlBq7ajGtqnAHEw3oMs&callback=initMap&libraries=places&v=weekly" async></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfjeLRd6YVIz8wzlBq7ajGtqnAHEw3oMs&callback=initMap&libraries=places&v=weekly" async></script>
 
-        @Scripts.Render("~/Scripts/map.js")
-    }
+            @Scripts.Render("~/Scripts/map.js")
+        }
 
-    <link href="~/Content/DataTables/css/dataTables.bootstrap.min.css"
-          rel="stylesheet" />
+        <link href="~/Content/DataTables/css/dataTables.bootstrap.min.css"
+              rel="stylesheet" />

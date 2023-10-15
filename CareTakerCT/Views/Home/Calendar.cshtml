@@ -4,20 +4,68 @@
     ViewBag.Title = "Calendar";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var doctorId = ViewBag.DoctorId;
+
+
+    var clinics = ViewBag.Clinics;
+    var doctors = ViewBag.Doctors;
+    var doctorRatings = ViewBag.DoctorRatings;
 }
 
+<h2 class="my-4">
+    Check Our Doctor Schedules
+</h2>
+
 <main class="container">
+
     <div class="row">
         <div class="col">
-            <p class="my-4">
-                <a class="btn btn-outline-dark" href="/Appointments/Create">Book a New Appointment</a>
-            </p>
-            <div id="calendar"></div>
+
+            @if (doctorId != null)
+            {
+                <div id="calendar"></div>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Doctor Name</th>
+                            <th>Email</th>
+                            <th>Rating</th>
+                            <th>Location</th>
+                            <th>id</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            for (int i = 0; i < clinics.Count; i++)
+                            {
+                                var location = clinics[i].Address;
+                                var doctor = doctors[i];
+                                var doctorRating = doctorRatings[i];
+                                <tr>
+                                    <td>@doctor.FirstName @doctor.LastName</td>
+                                    <td>@doctor.Email</td>
+                                    <td>@doctorRating</td>
+                                    <td>@location</td>
+                                    <td>@doctor.Id</td>
+                                    <td>
+                                        @Html.ActionLink("View Schedules", "Calendar", new { id = doctor.Id }, new { @class = "btn btn-outline-dark  btn-sm" })
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            }
         </div>
     </div>
+
     <div class="row">
         <div class="col">
-            @Html.ActionLink("Back to List", "Contact", "Home", new { @class = "btn btn-secondary mt-3" })
+            @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-secondary mt-3" })
         </div>
     </div>
 </main>
@@ -25,6 +73,9 @@
 @section Scripts {
     @Scripts.Render("~/bundles/calendar")
     @Scripts.Render("~/Scripts/calendar.js")
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+    @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap4.js")
+
     <script src="~/Scripts/notify.min.js" defer></script>
 
     <script>
@@ -76,7 +127,7 @@
                             // Display a notification for past events
                             $.notify("Unable to book past event", "error");
                         } else {
-                            window.location.href = '/Appointments/create/';
+                            window.location.href = '/Appointments/create/' + selectedDate;
 
                         }
                     },
@@ -108,4 +159,12 @@
 
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
 }
+
+<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
