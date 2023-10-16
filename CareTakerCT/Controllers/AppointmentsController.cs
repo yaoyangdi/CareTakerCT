@@ -92,8 +92,8 @@ namespace CareTakerCT.Controllers
 
         [Authorize]
         // GET: Appointments/Create
-        [Route("Appointments/Create/{date}")]
-        public ActionResult Create(string date)
+        [Route("Appointments/Create/{date}/{doctorId}")]
+        public ActionResult Create(string date, string doctorId, [Bind(Include = "Id,BookTime,Description,ClinicId,DoctorId")] Appointment appointment)
         {
             // Convert the string to a DateTime object
             if (DateTime.TryParse(date, out DateTime parsedDate))
@@ -104,12 +104,87 @@ namespace CareTakerCT.Controllers
                 ViewBag.Date = formattedDate; // Pass the formatted date to the view
             }
 
-            var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
-            var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
 
-            ViewBag.DoctorId = new SelectList(doctors, "Id", "FirstName");
-            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name");
-            return View();
+            StringBuilder sb = new StringBuilder();
+            sb.Append(HttpUtility.HtmlEncode(appointment.Description));
+
+            appointment.Description = sb.ToString();
+
+            // Encode the HTML entities to ensure data is properly sanitized and protected against XSS attacks
+            string strDes = HttpUtility.HtmlEncode(appointment.Description);
+            appointment.Description = strDes;
+
+            if (ModelState.IsValid)
+            {
+
+                // Query on the database for existing appointments
+                var existingAppointments = db.Appointments
+                    .Where(a => a.DoctorId == appointment.DoctorId)
+                    .ToList();
+
+                // Check if new appointment conflicts with existing appointment
+                bool hasConflict = false;
+                foreach (var existingAppointment in existingAppointments)
+                {
+                    DateTime existingStart = existingAppointment.BookTime;
+                    DateTime existingEnd = existingStart.AddHours(1); // Assume each appointment is 1 hour long
+                    DateTime newStart = appointment.BookTime;
+                    DateTime newEnd = newStart.AddHours(1);
+
+                    if ((newStart >= existingStart && newStart < existingEnd) ||
+                        (newEnd > existingStart && newEnd <= existingEnd))
+                    {
+                        hasConflict = true;
+                        break; // once a conflict occur, we stop checking
+                    }
+                }
+
+                if (hasConflict)
+                {
+
+                    ViewBag.Result = "There is a time conflict between the new appointment and the existing appointment. Please choose another time.";
+                }
+                else
+                {
+                    // If there are no conflicts, save the new appointment to the database
+
+                    // Here we add patientId to build the relationship between Patient and Appointment(Restrict the appointment is made from paitient)
+                    appointment.PatientId = User.Identity.GetUserId();
+
+                    db.Appointments.Add(appointment);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+            }
+
+            // Get all avaialble doctors in clinics
+
+            List<Clinic> c = db.Clinics.ToList();
+            List<Clinic> clinics = db.Clinics.ToList();
+            var doctors = new List<ApplicationUser>();
+
+            foreach (Clinic clinic in c)
+            {
+                var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
+                if (d != null)
+                {
+                    doctors.Add(d);
+                }
+                else
+                {
+                    clinics.Remove(clinic);
+                }
+            }
+
+            ViewBag.Doctors = doctors;
+            ViewBag.DoctorId = new SelectList(doctors, "Id", "FullName", doctorId);
+            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", appointment.ClinicId);
+            var doctor = appointment.Doctor;
+            var bookTime = appointment.BookTime;
+
+
+            return View(appointment);
         }
 
 
@@ -176,11 +251,28 @@ namespace CareTakerCT.Controllers
                 }
 
             }
-            var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
-            var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
 
-            ViewBag.DoctorId = new SelectList(doctors, "Id", "FirstName");
-            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", appointment.ClinicId);
+            // Get all avaialble doctors in clinics
+
+            List<Clinic> c = db.Clinics.ToList();
+            List<Clinic> clinics = db.Clinics.ToList();
+            var doctors = new List<ApplicationUser>();
+            foreach (Clinic clinic in c)
+            {
+                var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
+                if (d != null)
+                {
+                    doctors.Add(d);
+                }
+                else
+                {
+                    clinics.Remove(clinic);
+                }
+            }
+
+            ViewBag.Doctors = doctors;
+            ViewBag.DoctorId = new SelectList(doctors, "Id", "FullName", "Please Select");
+            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", "Please Select");
             var doctor = appointment.Doctor;
             var bookTime = appointment.BookTime;
 
@@ -205,9 +297,9 @@ namespace CareTakerCT.Controllers
             var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
             var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
 
-            ViewBag.DoctorId = new SelectList(doctors, "Id", "FirstName");
+            ViewBag.DoctorList = new SelectList(doctors, "Id", "FirstName", "Please Select");
 
-            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", appointment.ClinicId);
+            ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", "Please Select");
             return View(appointment);
         }
 

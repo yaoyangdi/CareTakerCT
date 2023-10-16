@@ -26,7 +26,24 @@ namespace CareTakerCT.Controllers
         public ActionResult Create()
         {
             var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
-            var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
+            // Get all avaialble doctors in clinics
+
+            List<Clinic> c = db.Clinics.ToList();
+            List<Clinic> clinics = db.Clinics.ToList();
+            var doctors = new List<ApplicationUser>();
+
+            foreach (Clinic clinic in c)
+            {
+                var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
+                if (d != null)
+                {
+                    doctors.Add(d);
+                }
+                else
+                {
+                    clinics.Remove(clinic);
+                }
+            }
             ViewBag.DoctorId = new SelectList(doctors, "Id", "FullName");
             return View();
         }
@@ -48,8 +65,25 @@ namespace CareTakerCT.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            // Get all avaialble doctors in clinics
 
-            ViewBag.DoctorId = new SelectList(db.Users, "Id", "Email", doctorRatings.DoctorId);
+            List<Clinic> c = db.Clinics.ToList();
+            List<Clinic> clinics = db.Clinics.ToList();
+            var doctors = new List<ApplicationUser>();
+
+            foreach (Clinic clinic in c)
+            {
+                var d = db.Users.Where(u => u.Id == clinic.DoctorId).FirstOrDefault();
+                if (d != null)
+                {
+                    doctors.Add(d);
+                }
+                else
+                {
+                    clinics.Remove(clinic);
+                }
+            }
+            ViewBag.DoctorId = new SelectList(doctors, "Id", "Email", doctorRatings.DoctorId);
             return RedirectToAction("Index", "Home");
         }
 

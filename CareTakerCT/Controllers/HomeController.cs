@@ -261,6 +261,7 @@ namespace CareTakerCT.Controllers
                 return HttpNotFound();
             }
             ViewBag.DoctorId = id;
+            ViewBag.DoctorName = db.Users.Where(d=>d.Id == id).FirstOrDefault().FullName;
             return View();
 
         }

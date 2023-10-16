@@ -4,7 +4,7 @@
     ViewBag.Title = "Calendar";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var doctorId = ViewBag.DoctorId;
-
+    var doctorName = ViewBag.DoctorName;
 
     var clinics = ViewBag.Clinics;
     var doctors = ViewBag.Doctors;
@@ -12,7 +12,7 @@
 }
 
 <h2 class="my-4">
-    Check Our Doctor Schedules
+    Check @doctorName's Schedules
 </h2>
 
 <main class="container">
@@ -83,6 +83,7 @@
         $(document).ready(function () {
             var appointments = [];
 
+
             $.ajax({
                 type: "GET",
                 url: "/Appointments/GetAppointments/@doctorId",
@@ -106,7 +107,10 @@
                 }
             });
 
+
+
             function initializeFullCalendar(appointments) {
+
                 var calendar = $("#calendar").fullCalendar({
                     defaultView: "month",
                     contentHeight: 600,
@@ -127,7 +131,7 @@
                             // Display a notification for past events
                             $.notify("Unable to book past event", "error");
                         } else {
-                            window.location.href = '/Appointments/create/' + selectedDate;
+                            window.location.href = '/Appointments/create/' + selectedDate + "/@doctorId";
 
                         }
                     },
