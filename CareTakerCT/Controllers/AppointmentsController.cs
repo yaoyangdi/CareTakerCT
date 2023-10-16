@@ -366,16 +366,16 @@ namespace CareTakerCT.Controllers
         {
 
             // Define labels
-            var oneMonthAgo = DateTime.Now.AddMonths(-1);
-            var endDate = DateTime.Now;
-            var dateRange = Enumerable.Range(0, 1 + endDate.Subtract(oneMonthAgo).Days).Select(offset => DateTime.Parse(oneMonthAgo.AddDays(offset).ToString("yyyy-MM-dd")));
+            var oneMonthAfter = DateTime.Now.AddMonths(1);
+            var startDate = DateTime.Now;
+            var dateRange = Enumerable.Range(0, 1 + oneMonthAfter.Subtract(startDate).Days).Select(offset => DateTime.Parse(startDate.AddDays(offset).ToString("yyyy-MM-dd")));
             var labels = dateRange.Select(date => date.ToString("yyyy-MM-dd")).ToList();
 
 
             // Define datasets
             // Retrieve data from Appointment Model
             var chartData = db.Appointments
-                .Where(appointment => appointment.BookTime >= oneMonthAgo && appointment.BookTime <= endDate)
+                .Where(appointment => appointment.BookTime <= oneMonthAfter && appointment.BookTime >= startDate)
                 .GroupBy(appointment => new
                 {
                     DoctorId = appointment.DoctorId,

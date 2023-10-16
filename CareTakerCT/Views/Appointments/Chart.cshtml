@@ -7,6 +7,10 @@
 
 <h2>Doctor Appointments</h2>
 
+<div style="text-align: right; margin-bottom: 20px;">
+    <button id="exportPdfButton" class="btn btn-success mt-3">Export as PNG</button>
+</div>
+
 <canvas id="doctorAppointmentsChart" style="width:100%; height:500px"></canvas>
 
 @section Scripts {
@@ -14,7 +18,9 @@
     @Scripts.Render("https://cdn.jsdelivr.net/npm/chart.js")
     <script src="https://cdn.jsdelivr.net/npm/moment"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
     <script>
         var labels = @Html.Raw(Json.Encode(Model.Labels));
         var datasetModel = @Html.Raw(Json.Encode(Model.Datasets));
@@ -43,7 +49,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Doctor Appointment Changes in Recent One Month',
+                        text: 'Doctor Appointment Changes in Future One Month',
                     },
                 },
                 scales: {
@@ -67,8 +73,43 @@
                 }
             },
 
-            
+
 
         });
+
+        // Function to export Chart.js chart to PDF
+        function exportToImage() {
+            // Get the canvas element containing the chart
+            const canvas = document.getElementById('doctorAppointmentsChart');
+
+            // Convert the canvas to an image using html2canvas
+            html2canvas(canvas).then(canvasImage => {
+                // Create a new Image element
+                const image = new Image();
+                image.src = canvasImage.toDataURL('image/png');
+
+                // Convert the canvas to a Blob
+                canvas.toBlob(function (blob) {
+                    // Create a temporary URL for the Blob
+                    const url = URL.createObjectURL(blob);
+
+                    // Create an anchor element for downloading
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'chart.png'; // Set the filename for the download
+
+                    // Trigger a click event on the anchor element to start the download
+                    a.click();
+
+                    // Release the temporary URL
+                    URL.revokeObjectURL(url);
+                }, 'image/png'); // Specify the desired image format (e.g., 'image/jpeg' for JPEG)
+
+            });
+        }
+
+        // Attach the export function to the button click event
+        document.getElementById('exportPdfButton').addEventListener('click', exportToImage);
+
     </script>
 }
