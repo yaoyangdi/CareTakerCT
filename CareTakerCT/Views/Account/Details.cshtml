@@ -1,0 +1,84 @@
+﻿@model CareTakerCT.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <div class="row">
+            <div class="col-md-3">
+                <dt class="field-label">
+                    @Html.DisplayNameFor(model => model.FullName)
+                </dt>
+            </div>
+            <div class="col-md-9">
+                <dd class="field-value">
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <dt class="field-label">
+                    Age
+                </dt>
+            </div>
+            <div class="col-md-9">
+                <dd class="field-value">
+                    @{
+                        // Calculate age
+                        var dateOfBirth = Model.DateOfBirth;
+                        var today = DateTime.Today;
+                        var age = today.Year - dateOfBirth.Year;
+
+                        // If dob not reach the date of this year, decrease by one
+                        if (dateOfBirth > today.AddYears(-age))
+                        {
+                            age--;
+                        }
+
+                        @age
+                    }
+                </dd>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <dt class="field-label">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+            </div>
+            <div class="col-md-9">
+                <dd class="field-value">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+            </div>
+        </div>
+
+    </dl>
+
+</div>
+
+@if (User.IsInRole("admin"))
+{
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary", style = "margin-right: 10px;" })
+
+}
+
+<div class="row">
+    <div class="col">
+        <button onclick="goBack()" class="btn btn-secondary mt-3">Back</button>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

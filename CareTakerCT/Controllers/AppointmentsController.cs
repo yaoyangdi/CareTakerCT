@@ -297,7 +297,7 @@ namespace CareTakerCT.Controllers
             var userRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
             var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == userRole.Id)).ToList();
 
-            ViewBag.DoctorList = new SelectList(doctors, "Id", "FirstName", "Please Select");
+            ViewBag.DoctorId = new SelectList(doctors, "Id", "FirstName", "Please Select");
 
             ViewBag.ClinicId = new SelectList(db.Clinics, "Id", "Name", "Please Select");
             return View(appointment);

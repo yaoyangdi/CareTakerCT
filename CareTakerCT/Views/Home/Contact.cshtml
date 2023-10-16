@@ -29,7 +29,6 @@
                     <th>Email</th>
                     <th>Rating</th>
                     <th>Location</th>
-                    <th>id</th>
                     <th></th>
                 </tr>
             </thead>
@@ -40,17 +39,16 @@
                         var location = Model.Clinics[i].Address;
                         var doctor = Model.Doctors[i];
                         var doctorRating = Model.DoctorRatings[i];
-                        <tr>
-                            <td><input type="checkbox" name="selectedDoctors" value="@doctor.Id" /></td>
-                            <td>@doctor.FirstName @doctor.LastName</td>
-                            <td>@doctor.Email</td>
-                            <td>@doctorRating</td>
-                            <td>@location</td>
-                            <td>@doctor.Id</td>
-                            <td>
-                                <a href="/Home/Calendar?id=@doctor.Id" class="btn btn-outline-dark btn-sm">View Schedules</a>
-                            </td>
-                        </tr>
+                                <tr>
+                                    <td><input type="checkbox" name="selectedDoctors" value="@doctor.Id" /></td>
+                                    <td><a href="@Url.Action("Details", "Account", new { id = doctor.Id })">@doctor.FullName</a></td>
+                                    <td>@doctor.Email</td>
+                                    <td>@doctorRating</td>
+                                    <td>@location</td>
+                                    <td>
+                                        <a href="/Home/Calendar?id=@doctor.Id" class="btn btn-outline-dark btn-sm">View Schedules</a>
+                                    </td>
+                                </tr>
                     }
                 }
             </tbody>

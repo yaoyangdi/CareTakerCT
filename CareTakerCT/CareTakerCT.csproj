@@ -502,6 +502,7 @@
     <Compile Include="Models\ClinicDoctorEmailViewModels.cs" />
     <Compile Include="Models\DoctorAppointmentData.cs" />
     <Compile Include="Models\DoctorRatings.cs" />
+    <Compile Include="Models\EditUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Files.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -840,6 +841,8 @@
     <Content Include="Views\DoctorRatings\Index.cshtml" />
     <Content Include="Views\Home\Calendar.cshtml" />
     <Content Include="Views\Appointments\Chart.cshtml" />
+    <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Uploads\" />

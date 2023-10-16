@@ -62,6 +62,5 @@ namespace CareTakerCT.Models
         public DbSet<Files> Files { get; set; }
 
         public DbSet<DoctorRatings> DoctorRatings { get; set; }
-
     }
 }

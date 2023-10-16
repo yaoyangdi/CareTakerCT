@@ -57,13 +57,13 @@
                     @Html.DisplayFor(modelItem => item.Clinic.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Doctor.FirstName)
-                </td>
+                    <a href="@Url.Action("Details", "Account", new { id = item.Patient.Id })">@item.Doctor.FullName</a>
 
+                </td>
                 @if (User.IsInRole("admin") || User.IsInRole("doctor"))
                 {
                     <td>
-                        @Html.DisplayFor(modelItem => item.Patient.FirstName)
+                        <a href="@Url.Action("Details", "Account", new { id = item.Patient.Id })">@item.Patient.FullName</a>
                     </td>
 
                     <td>

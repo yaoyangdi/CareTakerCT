@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CareTakerCT.Models;
+using SendGrid.Helpers.Errors.Model;
+using System.Net;
+using System.Data.Entity;
 
 namespace CareTakerCT.Controllers
 {
@@ -17,6 +20,7 @@ namespace CareTakerCT.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -418,6 +422,72 @@ namespace CareTakerCT.Controllers
         {
             return View();
         }
+
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+
+        }
+
+        [Authorize(Roles = "admin")]
+        // GET: Account/Edit/5
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            EditUserViewModel model = new EditUserViewModel();
+            model.Id = id;
+            model.Email = user.Email;
+            model.LastName = user.LastName;
+            model.FirstName = user.FirstName;
+            model.DateOfBirth = user.DateOfBirth;
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "admin")]
+        // POST: Account/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = db.Users.Find(model.Id);
+
+                if (user != null)
+                {
+                    // Update
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.DateOfBirth = model.DateOfBirth;
+                    user.Email = model.Email;
+
+                    // Save changes
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return View(model);
+        }
+
 
         protected override void Dispose(bool disposing)
         {
