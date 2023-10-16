@@ -31,6 +31,8 @@ namespace CareTakerCT
                       "~/Scripts/moment.min.js",
                       "~/Scripts/bootstrap-datetimepicker.js"));
 
+            bundles.Add(new Bundle("~/bundles/chart.js").Include(
+                      "~/Scripts/moment.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

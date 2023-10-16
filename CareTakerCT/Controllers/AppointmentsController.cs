@@ -1,8 +1,11 @@
-﻿using CareTakerCT.Models;
+﻿using CareTakerCT.Migrations;
+using CareTakerCT.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Globalization;
 using System.Linq;
@@ -269,27 +272,132 @@ namespace CareTakerCT.Controllers
         }
         public ActionResult Chart()
         {
-            var oneMonthAgo = DateTime.Now.AddMonths(-1);
 
+            // Define labels
+            var oneMonthAgo = DateTime.Now.AddMonths(-1);
+            var endDate = DateTime.Now;
+            var dateRange = Enumerable.Range(0, 1 + endDate.Subtract(oneMonthAgo).Days).Select(offset => DateTime.Parse(oneMonthAgo.AddDays(offset).ToString("yyyy-MM-dd")));
+            var labels = dateRange.Select(date => date.ToString("yyyy-MM-dd")).ToList();
+
+
+            // Define datasets
+            // Retrieve data from Appointment Model
             var chartData = db.Appointments
-                .AsEnumerable() 
-                .Where(appointment => appointment.BookTime >= oneMonthAgo) 
+                .Where(appointment => appointment.BookTime >= oneMonthAgo && appointment.BookTime <= endDate)
                 .GroupBy(appointment => new
                 {
                     DoctorId = appointment.DoctorId,
-
+                    Date = DbFunctions.TruncateTime(appointment.BookTime)
                 })
                 .Select(group => new DoctorAppointmentData
                 {
-                    DoctorName = db.Users.Where(d => d.Id == group.Key.DoctorId).FirstOrDefault().FullName,
-                    Date = group.FirstOrDefault().BookTime,
-                    AppointmentCount = group.Count()
+                    DoctorName = "",
+                    DoctorId = group.Key.DoctorId,
+                    Date = DbFunctions.TruncateTime(group.Key.Date),
+                    AppointmentCount = group.Count(),
                 })
                 .ToList();
 
-            return View(chartData);
+
+            // Update doctorName and Date in chartData
+            var doctorIds = chartData.Select(data => data.DoctorId).Distinct().ToList();
+            var doctorNames = db.Users.Where(user => doctorIds.Contains(user.Id))
+                .ToDictionary(user => user.Id, user => user.FullName);
+
+            foreach (var data in chartData)
+            {
+
+                data.DoctorName = doctorNames[data.DoctorId];
+
+
+                System.Diagnostics.Debug.WriteLine("bbbbbbbbbbbbbbbbb" + "   "+ data.Date + "   " + data.DoctorName +"   " + data.AppointmentCount);
+
+            }
+
+
+
+            // Create a dictionary to store chart data grouped by Date and DoctorId
+            var chartDataDict = chartData.GroupBy(data => new MyKey { Date = data.Date, DoctorId = data.DoctorId })
+                .ToDictionary(group => group.Key, group => group.First());
+
+
+
+            var datasets = new List<ChartDataset>(); // Our final return Model list
+
+            foreach (var doctorId in doctorIds)  // For each doctor exist in the database, iterate to get the dataset required by the chart
+            {
+                var chartdataset = new ChartDataset();
+                chartdataset.Label = doctorNames[doctorId].ToString();
+
+                foreach (var date in dateRange)
+                {
+                    // Create a key to search for data in the dictionary
+                    var key = new MyKey { Date = date, DoctorId = doctorId };
+
+                    // If data exists for the key, add it to the mergedChartData
+                    if (chartDataDict.ContainsKey(key))
+                    {
+                        System.Diagnostics.Debug.WriteLine("aaaaaaaaaaaaaaaaaa" + chartDataDict[key].DoctorName + "       " + chartDataDict[key].AppointmentCount);
+
+                        chartdataset.Data.Add(chartDataDict[key].AppointmentCount);
+                    }
+                    // If data doesn't exist, create a new record with count = 0
+                    else
+                    {
+                        chartdataset.Data.Add(0);
+                    }
+                }
+                datasets.Add(chartdataset);
+            }
+
+            var chartModel = new ChartModel();
+            chartModel.Labels = labels;
+            chartModel.Datasets = datasets;
+
+            return View(chartModel);
         }
     }
+}
 
-
+public class ChartDataset
+{
+    public ChartDataset()
+    {
+        Data = new List<int>();
     }
+    public string Label { get; set; }
+    public List<int> Data { get; set; }
+}
+
+public class ChartModel
+{
+    public List<string> Labels { get; set; }
+    public List<ChartDataset> Datasets { get; set; }
+}
+
+
+public class MyKey
+{
+    public DateTime? Date { get; set; }
+    public string DoctorId { get; set; }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is MyKey other)
+        {
+            return Date == other.Date && DoctorId == other.DoctorId;
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + Date.GetHashCode();
+            hash = hash * 23 + DoctorId.GetHashCode();
+            return hash;
+        }
+    }
+}
