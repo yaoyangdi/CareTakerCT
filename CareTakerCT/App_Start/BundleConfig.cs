@@ -41,8 +41,9 @@ namespace CareTakerCT
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/fullcalendar.css"));
 
+
             bundles.Add(new Bundle("~/bundles/map").Include(
-                      "~/Scripts/map.js"));
+          "~/Scripts/map.js"));
         }
     }
 }

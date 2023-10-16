@@ -11,7 +11,6 @@
     <a class="btn btn-outline-dark" href="/Appointments/Create">Book a New Appointment</a>
 </p>
 
-
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -76,6 +75,12 @@
     </tbody>
 </table>
 
+<div style="text-align: right; margin-bottom: 20px;">
+    <button onclick="exportToPdf()" class="btn btn-success mt-3">Export PDF</button>
+    <button onclick="exportToCsv()" class="btn btn-success mt-3">Export CSV</button>
+    <button onclick="exportToJson()" class="btn btn-success mt-3">Export JSON</button>
+</div>
+
 <div class="row">
     <div class="col">
         @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-secondary mt-3" })
@@ -85,6 +90,121 @@
 @section Scripts {
     @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
     @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap4.js")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
+
+    <script>
+
+
+        // Export features (Export data in pdf, csv, JSON)
+        function exportToPdf() {
+            var doc = new jsPDF();
+
+            // Collect table data
+            var headers = [];
+            var data = [];
+            var table = $('.table').DataTable();
+            // Current datatable settings
+            var currentLength = table.page.len();
+            // Set to display all rows
+            table.page.len(-1).draw();
+
+            $('.table thead th').each(function () {
+                headers.push($(this).text().trim());
+            });
+
+            $('.table tbody tr').each(function () {
+                var rowData = [];
+                $(this).find('td').each(function () {
+                    rowData.push($(this).text().trim());
+                });
+                data.push(rowData);
+            });
+
+            // Add table to the PDF
+            doc.autoTable({
+                head: [headers],
+                body: data
+            });
+
+            doc.save('table.pdf');
+
+            // After exporting, restore the original settings
+            table.page.len(currentLength).draw();
+
+        }
+
+        function exportToCsv() {
+            var csvContent = "data:text/csv;charset=utf-8,";
+
+            // Escape and format the CSV content
+            function escapeCsvValue(val) {
+                val = val.toString().replace(/"/g, '""'); // escape double quotes
+                val = val.replace(/\s*\n\s*/g, ' '); // replace newlines and surrounding spaces with a single space
+                if (/[",\n]/.test(val)) {
+                    val = '"' + val + '"';
+                }
+                return val;
+            }
+
+            // Retrieve table head
+            var headerRow = [];
+            $('.table thead th').each(function () {
+                headerRow.push(escapeCsvValue($(this).text().trim()));
+            });
+            csvContent += headerRow.join(",") + "\n"; // add newline
+
+            // Retrieve table rows
+            $('.table tbody tr').each(function () {
+                var rowData = [];
+                $(this).find('td').each(function () {
+                    rowData.push(escapeCsvValue($(this).text().trim()));
+                });
+                csvContent += rowData.join(",") + "\n"; // add newline
+            });
+
+            // Create the download link
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "table_data.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link); // remove the link after downloading
+        }
+
+        function exportToJson() {
+            var tableData = [];
+            $('.table tbody tr').each(function () {
+                var rowData = {};
+                $(this).find('td').each(function (index) {
+                    var columnName = $('.table thead th:eq(' + index + ')').text().trim();
+                    var cellValue = $(this).text().trim();
+                    if (columnName === 'Options') {
+                        // Replace newline characters with a comma and a space for the "Options" column
+                        cellValue = cellValue.replace(/\s*\n\s*/g, ', ');
+                    }
+                    rowData[columnName] = cellValue;
+                });
+                tableData.push(rowData);
+            });
+
+            // Convert data in the format of JSON
+            var jsonData = JSON.stringify(tableData);
+
+            // Create the download link
+            var blob = new Blob([jsonData], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'table_data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
     <script>
         $(document).ready(function () {
             $('.table').DataTable({
@@ -120,6 +240,7 @@
 
             // Initial call to mark past appointments
             markPastAppointments();
+
         });
     </script>
 }
