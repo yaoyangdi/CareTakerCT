@@ -1,0 +1,103 @@
+﻿@model List<CareTakerCT.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var doctors = ViewBag.Doctors;
+    var patients = ViewBag.Patients;
+    var admins = ViewBag.Admins;
+}
+
+<h2>Manage All Users</h2>
+<hr/>
+<div class="table-responsive">
+    <h4>Patient</h4>
+    <table class="table table-bordered mb-3">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Date of Birth</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in patients)
+            {
+                <tr>
+
+                    <td>@user.FullName</td>
+                    <td>@user.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Account", new { id = user.Id })" class="btn btn-primary">Edit</a>
+                        <a href="@Url.Action("Delete", "Account", new { id = user.Id })" class="btn btn-danger">Delete</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>Doctors</h4>
+    <table class="table table-bordered mb-3">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Date of Birth</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in doctors)
+            {
+                <tr>
+
+                    <td>@user.FullName</td>
+                    <td>@user.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Account", new { id = user.Id })" class="btn btn-primary">Edit</a>
+                        <a href="@Url.Action("Delete", "Account", new { id = user.Id })" class="btn btn-danger">Delete</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>Admins</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Date of Birth</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in admins)
+            {
+                <tr>
+
+                    <td>@user.FullName</td>
+                    <td>@user.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Account", new { id = user.Id })" class="btn btn-primary">Edit</a>
+                        <a href="@Url.Action("Delete", "Account", new { id = user.Id })" class="btn btn-danger">Delete</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

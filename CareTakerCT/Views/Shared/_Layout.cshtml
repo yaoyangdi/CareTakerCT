@@ -41,6 +41,11 @@
 
                     <li>@Html.ActionLink("Clinics", "Index", "Clinics", new { area = "" }, new { @class = "nav-link" })</li>
 
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("Management", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

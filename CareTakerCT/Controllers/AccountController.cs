@@ -489,6 +489,52 @@ namespace CareTakerCT.Controllers
         }
 
 
+        [Authorize(Roles = "admin")]
+        // GET: Appointments/Delete/5
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = db.Users.Where(u => u.Id == id).FirstOrDefault();
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        [Authorize(Roles = "admin")]
+        // POST: Appointments/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            ApplicationUser user = db.Users.Find(id);
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult Index ()
+        {
+            var doctorRole = db.Roles.Where(r => r.Name == "doctor").FirstOrDefault();
+            var doctors = db.Users.Where(u => u.Roles.Any(r => r.RoleId == doctorRole.Id)).ToList();
+            ViewBag.Doctors = doctors;
+
+            var adminRole = db.Roles.Where(r => r.Name == "admin").FirstOrDefault();
+            var admins = db.Users.Where(u => u.Roles.Any(r => r.RoleId == adminRole.Id)).ToList();
+            ViewBag.Admins = admins;
+
+            var patientRole = db.Roles.Where(r => r.Name == "patient").FirstOrDefault();
+            var patients = db.Users.Where(u => u.Roles.Any(r => r.RoleId == patientRole.Id)).ToList();
+            ViewBag.Patients = patients;
+
+            return View();
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
